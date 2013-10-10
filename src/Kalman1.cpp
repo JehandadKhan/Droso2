@@ -33,6 +33,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DIR_NAME "/scratch/jxkhan/DataIdx%dGene%dMeas%dTimePts%d"
+#define NODE_LOG "/scratch/jxkhan/Node%dLog.txt"
+
 #define STACK_SIZE (1024 * 1024)
 
 #define MINLAMBDA 0
@@ -140,7 +143,7 @@ double perChange = 0.2;
 					char strFileName[256] = {0};
 					char strNodeFile[256] = {0};
 					char strResultFile[256] = {0};
-					sprintf(strDirName,"/scratch/jxkhan/DataIdx%dGene%dMeas%dTimePts%d",idx,nGene,nObservations,nTimePoints);
+					sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
 					umask(0);
 					printf("[%d]Realization %d Index %d Time: %lf Creating Dir\n",mpirank,curRealization,idx,omp_get_wtime()- start);
 					mkdir(strDirName,S_IRWXU | S_IRWXG | S_IRWXO);
@@ -652,13 +655,13 @@ static int CloneFunc(void* arg)
 	char strLogFileName[256] = {0};
 	char strNodeFile[256] = {0};
 
-	sprintf(strDirName,"/scratch/jxkhan/DataIdx%dGene%dMeas%dTimePts%d",idx,nGene,nObservations,nTimePoints);
+	sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
 //	printf(strDirName);
 	sprintf(strFileName,"%s/Realization%d.mat",strDirName,curRealization);
 //	printf(strFileName);
 	sprintf(strNodeFile,"%s/Node%d.mat",strDirName,mpirank);
 //	printf(strNodeFile);
-	sprintf(strLogFileName,"/scratch/jxkhan/Node%dLog.txt",mpirank);
+	sprintf(strLogFileName,NODE_LOG,mpirank);
 //			FILE fidLog = fopen(strLogFileName,"a");
 
 	//load the X and Y from the data file and set them in the respective variables
@@ -1069,7 +1072,7 @@ static int  CreateNWProc(void *arg)
 	int perChange = d->pch;
 	int SparsityLvl = d->splvl;
 
-	sprintf(strDirName,"/scratch/jxkhan/DataIdx%dGene%dMeas%dTimePts%d",idx,nGene,nObservations,nTimePoints);
+	sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
 	sprintf(strFileName,"%s/Realization%d.mat",strDirName,curRealization);
 
 	CTimeVaryingNW nw;
