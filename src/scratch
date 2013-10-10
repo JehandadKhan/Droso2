@@ -1,0 +1,509 @@
+//the following code was used to test the CMatrix class and CRndStream Class functionality
+
+	CMatrix mat1(10,5);
+	CMatrix mat2(5,5);
+	CMatrix mat3(10,5);
+
+////	mat1.Eye(10);
+//	for(int i = 0; i < mat1.rows;i++)
+//	{
+//		for(int j = 0;j < mat1.cols;j++)
+//		{
+//			mat1.mat[mat1.cols*i + j] = mat1.cols*i+j;
+//		}
+//		printf("\n");
+//	}
+//	printf("mat1\n");
+//	mat1.Print();
+//
+//	mat2.Eye();
+//	printf("mat2\n");
+//	mat2.Print();
+//
+//	mat3.Multiply(&mat1,&mat2);
+//	printf("mat3 = mat1 * mat2\n");
+//	mat3.Print();
+
+	//now we generate a population of MV Gaussian random numbers
+	CRndStream rnd;
+	CMatrix mu(1,5);//the matrix is initialized zero by default
+	CMatrix sigma(5,5);
+	sigma.Eye();
+	rnd.vRngGaussianMV(&mat3,&mu,&sigma);
+	mat3.Print();
+	
+	
+	
+	
+//	CMatrix3D mat3d(5,5,5);
+//	mat3d.Eye();
+//
+//	mat3d.Print();
+//
+//	CVector vec(10,0);
+//	CMatrix matUnif(10,10);
+//	CRndStream rnd;
+//	rnd.vRngUniformDiscrete(&matUnif,1,20);
+//	matUnif.GetVec(&vec,2,0);
+//	printf("matrix\n");
+//	matUnif.Print();
+//	printf("Vector\n");
+//
+//	vec.Print();
+
+//	matUnif.Print();
+//	rnd.vRngUniform(&matUnif,0,1);
+//	matUnif.Print();
+//	double d[] = {3,3,3};
+//	CVector measVec(d,3,0);
+//	CTimeVaryingNW nw(10,3,3,0.2);
+//	CMatrix mat(10,5);
+//	CVector vec(10,1);
+//	CVector vecRes(10,1);
+//	CVector vecRes2(10,1);
+//
+//	vec.FillVec();
+//	vecRes.FillVec();
+//	vecRes2.FillVec();
+//
+//	mat.FillMat();
+//	printf("Orig mat\n");
+//	mat.Print();
+//
+//	mat.MultiplyV(&vecRes,&vec,1);
+//	vecRes.Print();
+
+	//testing the sparse matrix vector multiplication
+
+//	CSparseMatrix spMat;
+//	CVector vec(3,1);
+//	CVector vecOpB(9,1);
+//	CVector res(9,1);
+//	vec.FillVec();
+//	vecOpB.FillVec();
+//	printf("vec\n");
+//	vec.Print();
+//	printf("OpB\n");
+//	vecOpB.Print();
+//
+//	spMat.KronEyeMatVec(3,&vec,&vecOpB,&res);
+//	CMatrix matDense(spMat.Rows,spMat.Cols);
+//	spMat.DenseMatrix(&matDense);
+//	res.Print();
+//
+//	matDense.Print();
+  //testing the VecProd function
+
+//	double data[] = {1,2,3,4,5,6};
+//	CVector vecX(data,6,1);
+//	CVector vecY(data,6,0);
+//	CMatrix res(6,6);
+//
+//	res.VecProd(&vecX,&vecY);
+//	res.Print();
+//	printf("Sub from EYE\n");
+//	res.EyeSubMat();
+//	res.Print();
+//	shotgun_data prob;
+//	char matfile[] = "test.txt";
+
+//	char vecfile[] = "vecY.mm";
+//	double lambda = 1;
+//	double threshold = 1e-5;
+//	int maxiter = 100;
+//	int verbose = 1;
+//	int K = 0;
+//	int N = 100;//the length of the vector
+//
+//	//load the A matrix and the vector
+//
+//	//the matrix A for us is the identity, so we fill it in manually
+//
+//    prob.A_cols.reserve(N);
+//    prob.A_rows.reserve(N);
+//
+//    for (int i=0; i<N; i++)
+//    {
+//        prob.A_cols[i].add(i, 1);
+//        prob.A_rows[i].add(i, 1);
+//    }
+//
+//    prob.nx = N;
+//    prob.ny = N;
+//
+//
+//    convert_2_vec(vecfile, &prob);
+//
+//    solveLasso(&prob, lambda, K /*path length*/, threshold /*default 1e-5 */, maxiter /*100*/, verbose);
+//
+//    //prob.x vector has the result of the lasso solution
+//    int * I = new int[prob.nx];
+//    int * J = new int[prob.nx];
+//    double * val = new double[prob.nx];
+//    for (int i=0; i< prob.nx; i++){
+//      I[i] = i;
+//      J[i] = 0;
+//      val[i] = prob.x[i];
+//    }
+//    write_to_file("vecRes.mm", I,J,val,prob.nx,1,prob.nx);
+
+//	CVector vecY;
+//	vecY.ReadMMFile("vecY.mm");
+//	CVector vecYhat(vecY.length,1);
+//
+//
+//	CLasso ls(&vecY,&vecY,0.2 /*lambda*/ );
+//	vecY.WriteMMFile("vecYhat.mm");
+
+//	CMatrix matRep(3,3);
+//	CVector vecOp(9,1),vecRes(9,1);
+//	CMatrix dnsMat(9,9);
+//	matRep.FillMat();
+//	vecOp.FillVec();
+//	CSparseMatrix matSp;
+//	matSp.KronEyeMatVec(3,&matRep,&vecOp,&vecRes,true);
+//	matSp.DenseMatrix(&dnsMat);
+//	printf("The matrix operand\n");
+//	dnsMat.Print();
+//	printf("The operand vector\n");
+//	vecOp.Print();
+//
+//	printf("Resultanat Vector\n");
+//	vecRes.Print();
+
+//	CMatrix mata(3,3);
+//	mata.FillMat();
+//	printf("Mat A\n");
+//	mata.Print();
+//	CMatrix matb(3,3);
+//	printf("Mat B\n");
+//	matb.FillMat();
+//	matb.Print();
+//	CMatrix matc(3,3);
+//
+//	mata.MMMul(&matb,&matc);
+//
+//	matc.Print();
+
+
+		//we need to standardize the data by dividing with the variance for each column. since centering causes bias and the model is no longer valid
+
+		/*
+		 *find the variance of each column of Y and divide the column with that variance,
+		 * also divide the corresponding column of X with the same variance, that is the variance of Y
+		 */
+
+//
+//		for(int i =0;i < nTimePoints;i++)
+//		{
+//			nw.pMatX[i].Transpose();//inplace transpose so that we can process rows easily
+//			printf("after transpose\n");
+//			nw.pMatX[i].Print();
+//			nw.pMatY[i].Transpose();
+//			printf("Y after transpose\n");
+//			nw.pMatY[i].Print();
+//
+//			CVector temp(nGene,1);
+//
+//			for(int j = 0; j < nObservations;j++)
+//			{
+//				nw.pMatX[i].GetVec(&temp,j,true);
+//				double mean = temp.Sum();
+//				mean = mean / temp.length;
+//				double var = 0;
+//				for(int k = 0;k < temp.length;k++)
+//				{
+//					var = var + pow(temp.data[k] - mean, 2);
+//				}
+//				var = var / temp.length;
+//				temp.ScaleI(1 / var);
+//				printf("Scaled X obsn: %d, time:%d \n",j,i);
+//				temp.Print();
+//				nw.pMatX[i].SetVec(&temp,j,true);
+//				nw.pMatY[i].GetVec(&temp,j,true);
+//				temp.ScaleI(1 / var);
+//				nw.pMatY[i].SetVec(&temp,j,true);
+//				printf("Scaled Y obsn: %d, time:%d \n",j,i);
+//				temp.Print();
+//			}
+//			//transpose back
+//			nw.pMatX[i].Transpose();
+//			nw.pMatY[i].Transpose();
+//		}
+
+//code to generate a random initial condition
+
+/*
+CVector ic(nGene,1);
+
+CRndStream rnd;
+rnd.vRngGaussian(&ic,0,1);
+ic.ScaleI(10);
+ic.Threshold(0.5);
+printf("The Initial Condition\n");
+ic.Print();*/
+
+
+/* Code to search for the best lambda and then refine that range for a better finer lambda
+
+			//first we do coarse lasso then fine tune the solution to make it more accurate
+//			printf("Begining search for best lambda\n");
+			double delta = 0.1;
+			int numLambda = (dlambda[1] - dlambda[0]) / delta;
+			double* pMse = new double[numLambda];
+			//find the minimum Mse and select that lambda for fine search
+			double min = pMse[0];
+			int minidx = 0;
+			pMse[0] = INFINITY;
+
+			matA[i]->GetVec(&vecA,j,true);
+			vecA.bColVector = true;
+
+			//search for the lasso paramter
+			for(int k =1; k < numLambda;k++)
+			{
+				printf("Lasso for Lambda = %f\n",k * delta + dlambda[0]);
+
+				CVector vecConstrEst(nGenes,1);
+				CVector vecTemp(nGenes,1);
+				CVector vecYhat(nobs,1);
+				CLasso lasso;
+				//(pEstA[j],&vecConstrEst,k * delta + dlambda[0]);
+				lasso.DoLasso(&pEstA[i][j],&vecConstrEst,k * delta + dlambda[0],1/*rho*/,1/*alpha*/,100/*Max iteration*/,0/*verbose*/);
+//				printf("calc the mean sq error for the estimated obsn and the true obsn\n");///
+				pMatX[i-1].MultiplyV(&vecYhat,&vecConstrEst,true);
+				printf("X^t * vecConstrEst = vecYhat\n");
+				printf("X\n");
+				pMatX[i - 1].Print();
+
+				printf("The estimated interaction vector(vecConstrEst) for row %d lambda = %f\n",j,k * delta + dlambda[0]);
+				vecConstrEst.Print();
+				printf("the estimated observation (vecYhat) from the above vector\n");
+				vecYhat.Print();
+				printf("the original observation \n");
+				curObs.Print();
+				//then we calc the difference between vecyy[][] and vecyy_hat and take its two norm
+				vecYhat.AddI(&curObs, 1, -1);
+				pMse[k] = vecYhat.Norm(2);
+//				vecTemp.Copy(&vecA);
+//				vecTemp.AddI(&vecConstrEst,1,-1);
+//				pMse[k] = vecTemp.Norm(2); //this is the metric for decision
+				printf("The estimated vector for lambda = %f and mse = %f is \n", k * delta, pMse[k]);
+				vecConstrEst.Print();
+			}
+			//sort the Mse to find the minimum
+			min = pMse[0];
+			minidx = 0;
+			for(int k = 1; k < numLambda;k++)
+			{
+				if(pMse[k] < min)
+				{
+					min = pMse[k];
+					minidx = k;
+				}
+			}
+			//fine tune the parameter
+
+			printf("Best coarse Lambda %f, corresponding MSE %f\n",minidx* delta + dlambda[0],pMse[minidx]);
+			delete pMse;
+
+			double newdelta = 0.001;
+			double minlambda = (minidx - 1) * delta + dlambda[0];
+			double maxlambda = (minidx + 1) * delta + dlambda[0];
+			numLambda = (maxlambda - minlambda) / newdelta;
+			pMse = new double[numLambda];
+			//the second search loop for fine grained search
+//			printf("search for a finer lambda\n");
+			for(int k =1; k < numLambda;k++)
+			{
+				CVector vecConstrEst(nGenes,1);
+				CVector vecYhat(nobs,1);
+				CVector vecTemp(nGenes,1);
+
+
+				CLasso lasso;
+				//(pEstA[j],&vecConstrEst,k * delta + dlambda[0]);
+				lasso.DoLasso(&pEstA[i][j],&vecConstrEst,k * newdelta + minlambda,1 , 1, 100,0);
+
+				//calculate and store the error and lambda of this lasso estimate
+
+				//to calc the error we need to calculate the product estmatrix * vecxx[][] = vecyy_hat
+				pMatX[i-1].MultiplyV(&vecYhat,&vecConstrEst,true);
+				printf("The estimated interaction vector for row %d lambda = %f\n",j,k * delta + dlambda[0]);
+				vecConstrEst.Print();
+				printf("the estimated observation from the above vector\n");
+				vecYhat.Print();
+				printf("the original observation \n");
+				curObs.Print();
+
+				//then we calc the difference between vecyy[][] and vecyy_hat and take its two norm
+				vecYhat.AddI(&curObs, 1, -1);
+				pMse[k] = vecYhat.Norm(2); //this is the metric for decision
+//				vecTemp.Copy(&vecA);
+//				vecTemp.AddI(&vecConstrEst,1,-1);
+//				pMse[k] = vecTemp.Norm(2);
+				printf("The estimated matrix for lambda = %f and mse = %f is \n", k * newdelta + minlambda, pMse[k]);
+			}
+			//find the min mse
+			min = pMse[0];
+			minidx = 0;
+
+			for(int k = 1; k < numLambda;k++)
+			{
+				if(pMse[k] < min)
+				{
+					min = pMse[k];
+					minidx = k;
+				}
+			}
+			//restimate the connectivity row using the selected lasso
+			printf("Best fine lambda %f, corresponding Mse %f \n",minidx * newdelta + minlambda,pMse[minidx]);
+			//find the optimum estimate (again) and overwrite the unconstrained one
+			CLasso lasso;
+//			arrayLambda[j] = minidx * newdelta + minlambda;
+
+*/
+
+
+
+
+
+//	//test OpemMP
+//#pragma omp parallel
+//	printf("Hello from thread %d, nthreads %d \n",omp_get_thread_num(), omp_get_num_threads());
+//	return 0;
+
+	//matio test
+
+//	CMatrix matrix1(5,5);
+//	matrix1.FillMat();
+//	matrix1.Print();
+//	CMatrix matrix2(5,5);
+//	matrix2.Eye();
+//
+//	CMatrix mat2(5,10);
+//	mat2.Eye();
+//	CMatrix::SaveMat("test1.mat",2,&matrix1,"matrix1",&mat2,"mat2");
+//
+//	CMatrix mat3(10,5);
+//	mat3.FillMat();
+//	CMatrix::SaveMat("test1.mat",1,&mat3,"mat3");
+//
+//	CMatrix** mat3d = new CMatrix*[2];
+//	mat3d[0] = &matrix1;
+//	mat3d[1] = &matrix2;
+//
+//	CMatrix::SaveMat3d("threed.mat",1,mat3d,2,"mat3d");
+
+//	size_t dims1[3] = {5,5,5};
+//	 double*** mat1 = new double**[dims1[0]];//[100][200][300] = {0};
+//	mat_t *mat;
+//	matvar_t *matvar;
+//
+//
+//	for(int i =0;i < dims1[0];i++)
+//	{
+//		mat1[i] = new double*[dims1[1]];
+//		for(int j = 0;j < dims1[1];j++)
+//		{
+//			mat1[i][j] = new double[dims1[2]];
+//			for(int k =0; k < dims1[2];k++)
+//			{
+//				if(i == j)
+//					mat1[i][j][k] = 1;
+//				else
+//					mat1[i][j][k] = 0;
+//			}
+//		}
+//	}
+//
+//
+//	mat = Mat_Open("three_matrix.mat",MAT_ACC_RDWR);
+//    matvar = Mat_VarCreate("mat1",MAT_C_DOUBLE,MAT_T_DOUBLE,3,dims1,mat1,MAT_F_DONT_COPY_DATA);
+//    Mat_VarWrite( mat, matvar, MAT_COMPRESSION_NONE);
+//    Mat_VarFree(matvar);
+//    Mat_Close(mat);
+
+
+    //first we generate the time varying network matrices
+//	MKL_INT numGenes = 10;
+//	MKL_INT numTimePoints = 3;
+//	MKL_INT numObs = 3;
+//	double perEvolution = 0.2;
+//	double lambda = 0.2;
+//	CVector ic(numGenes* numGenes,1);
+//	CMatrix temp(numGenes,numGenes);
+//	temp.Sprand(0.3);
+//	temp.Vec(&ic);
+//	temp.Release();
+//
+//	CTimeVaryingNW tvnw(numGenes,numTimePoints,numObs,perEvolution);
+//
+//	CKalmanFilter kf(tvnw.pVecX,tvnw.pVecY,numGenes,numTimePoints,numObs,&ic,lambda);
+
+//	CSparseMatrix sp(10,10);
+//	sp.Eye(2);
+//	sp.Print();
+//
+//	CMatrix matA(100,100);
+//	matA.Eye();
+//
+//	CVector vecB(100,1);
+//	vecB.ReadMMFile("spvecx.mm");
+//	vecB.bColVector = true;
+//	CVector vecXHat(100,1);
+//	CVector vecXHat2(100,1);
+//
+//	CLasso lasso(&matA,&vecB,&vecXHat,0.2);
+//	lasso.DoLasso(&vecB,&vecXHat2,0.2);
+//	vecXHat2.AddI(&vecXHat,1,-1);
+//	printf("the difference\n");
+//	vecXHat2.Print();
+//	vecXHat.WriteMMFile("admmvecx.mm");
+//	vecXHat.Print();
+
+//	CVector v(25,1);
+//	v.FillVec();
+//	printf("Vector\n");
+//	v.Print();
+//	CMatrix mat(5,5);
+//	mat.UnVec(&v);
+//	printf("Matrix\n");
+//	mat.Print();
+
+		
+		/*
+		 * Extract the resulting matrix from the filter vector member and compare them to the original to determine the error percentage and distance
+		 *
+		 */
+
+//		printf("The smoothed Estimate\n");
+//		CMatrix* matKalman = new CMatrix[nTimePoints+1]; //zeroth is IC then the estimates
+//		for(int i =1;i < (nTimePoints+1);i++)
+//		{
+//			matKalman[i].Create(nGene,nGene);
+//
+//			for(int j = 0; j < nGene; j++)
+//			{
+//				matKalman[i].SetVec(&(filter.pEstSmtA[i][j]),j,true);
+//			}
+////			printf("Kalman Estimate at time %d\n",i);
+////			matKalman[i].Print();
+//		}
+
+
+		/*
+		 * Display the estimated results
+		 */
+//		for(int i = 1;i < nTimePoints + 1;i++)
+//		{
+//			printf("Original Matrix at time %d\n",i - 1);
+//			nw.matGeneInteractions->pMats[i - 1].Print();
+//			printf("Estimate at time %d\n",i);
+//			for(int j = 0; j < nGene;j++)
+//			{
+//				filter.pEstA[i][j].Print(true);
+//			}
+//			printf("\n");
+//		}
+

@@ -1,0 +1,13 @@
+[0] MPI: Process 0 on Fedora17 out of 2
+[0] [0]Realization 0 Index 0 Time: 0.000447 Generating Network 
+[0] [0]Realization 0 Index 0 Time: 0 Mem Usage VM: 235.468750 RSS:9.800781
+[0] [0]Realization 0 Index 0 Time: 0.000506 Creating Dir
+[1] MPI: Process 1 on Fedora17 out of 2
+[0] [0]Realization 0 Index 0 Time: 9.533628 Network Generated 
+[0] 1
+[1] [1] New data gene = 0 idx = 0 curRealization = 0 
+[1] [1] New params nGene = 10 nTimePoints = 3 nObservations = 7
+[1] [1]Realization 0 Index 0 Time: 0 
+[1] /scratch/jxkhan/DataIdx0Gene10Meas7TimePts3/scratch/jxkhan/DataIdx0Gene10Meas7TimePts3/Realization0.mat/scratch/jxkhan/DataIdx0Gene10Meas7TimePts3/Node1.mat[1]Relaization:0 Index 0 Time: 0.000312 Begin Estimate Initial Condition 
+[1] [1]Realization 0 Index 0 Time: 0.000331 Calc IC for gene 0 
+[1] Hello

@@ -1,0 +1,194 @@
+[1] MPI: Process 1 on Fedora17 out of 2
+[0] MPI: Process 0 on Fedora17 out of 2
+[0] [0]Realization 0 Index 0 Time: 0.000443 Generating Network 
+[0] [0]Realization 0 Index 0 Time: 0 Mem Usage VM: 235.468750 RSS:9.800781
+[0] [0]Realization 0 Index 0 NO Generating Data, ONLY SIMULATION!!
+[0] [0]Realization 0 Index 0 Time: 0.000508 Creating Dir
+[0] Begining to Allocate Memory
+[0] Initialized the sparse and initial matrices
+[0] Allocated the matGeneInteractions matrix for time 0
+[0] Multiplication for time 0
+[0] Initialized the time zero conn matrix
+[0] Memory alloc for time 1
+[0] Memory alloc done for time 1
+[0] Being calc for time 1
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 2
+[0] Memory alloc done for time 2
+[0] Being calc for time 2
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 3
+[0] Memory alloc done for time 3
+[0] Being calc for time 3
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 4
+[0] Memory alloc done for time 4
+[0] Being calc for time 4
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 5
+[0] Memory alloc done for time 5
+[0] Being calc for time 5
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 6
+[0] Memory alloc done for time 6
+[0] Being calc for time 6
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 7
+[0] Memory alloc done for time 7
+[0] Being calc for time 7
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 8
+[0] Memory alloc done for time 8
+[0] Being calc for time 8
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 9
+[0] Memory alloc done for time 9
+[0] Being calc for time 9
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 10
+[0] Memory alloc done for time 10
+[0] Being calc for time 10
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 11
+[0] Memory alloc done for time 11
+[0] Being calc for time 11
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 12
+[0] Memory alloc done for time 12
+[0] Being calc for time 12
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 13
+[0] Memory alloc done for time 13
+[0] Being calc for time 13
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 14
+[0] Memory alloc done for time 14
+[0] Being calc for time 14
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 15
+[0] Memory alloc done for time 15
+[0] Being calc for time 15
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 16
+[0] Memory alloc done for time 16
+[0] Being calc for time 16
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 17
+[0] Memory alloc done for time 17
+[0] Being calc for time 17
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 18
+[0] Memory alloc done for time 18
+[0] Being calc for time 18
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 19
+[0] Memory alloc done for time 19
+[0] Being calc for time 19
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 20
+[0] Memory alloc done for time 20
+[0] Being calc for time 20
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 21
+[0] Memory alloc done for time 21
+[0] Being calc for time 21
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Memory alloc for time 22
+[0] Memory alloc done for time 22
+[0] Being calc for time 22
+[0] Conn Mat for this time realized
+[0] Deciding for edges to be born
+[0] Deciding for edges to die
+[0] About to multiply matrices
+[0] Matrix multiplication done
+[0] Network generation complete
+[0] 1
+[1] [1] New data gene = 0 idx = 0 curRealization = 0 
+[1] [1] New params nGene = 10 nTimePoints = 23 nObservations = 3
+[1] [1]Realization 0 Index 0 Time: 0 
+[1] [1]Relaization:0 Index 0 Time: 0.000239 Begin Estimate Initial Condition 
+[1] [1]Realization 0 Index 0 Time: 0.000380 Calc IC for gene 0 

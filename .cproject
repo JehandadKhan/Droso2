@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="intel.linux.x86_64.exe.rel.1066799669_13.1.0">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="intel.linux.x86_64.exe.rel.1066799669_13.1.0" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ICCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="intel.linux.x86_64.exe.rel.1066799669_13.1.0" name="Release" parent="intel.linux.x86_64.exe.rel_13.1.0">
+					<folderInfo id="intel.linux.x86_64.exe.rel.1066799669._13.1.0" name="/" resourcePath="">
+						<toolChain id="intel.toolchain.linux.x86_64.exe.rel.244583174_13.1.0" name="Intel Toolchain for Executable on Intel(R) 64" superClass="intel.toolchain.linux.x86_64.exe.rel_13.1.0">
+							<targetPlatform archList="x86_64" binaryParser="org.eclipse.cdt.core.ELF" id="intel.platform.linux.x86_64.exe.rel_13.1.0.1175365977" name="Platform.Executable.Release" osList="linux" superClass="intel.platform.linux.x86_64.exe.rel_13.1.0"/>
+							<builder buildPath="${workspace_loc:/Kalman1}/Release" id="intel.builder.linux.x86_64.exe.rel.1857538325_13.1.0" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Intel Builder" superClass="intel.builder.linux.x86_64.exe.rel_13.1.0"/>
+							<tool command="mpic++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} " id="intel.cpp.compilestep.linux.x86_64.exe.rel.1605523733_13.1.0" name="Intel Intel(R) 64 C++ Compiler " superClass="intel.cpp.compilestep.linux.x86_64.exe.rel_13.1.0">
+								<option id="intel.compilestep.general.optimization2.1845759496" name="Optimization Level" superClass="intel.compilestep.general.optimization2" value="general.opt.speedHLO" valueType="enumerated"/>
+								<option id="intel.compilestep.optimization.parallel.875368790" name="Parallelization (-parallel)" superClass="intel.compilestep.optimization.parallel" value="true" valueType="boolean"/>
+								<option id="intel.compilestep.opt.matmul.54005463" name="Optimize Matrix Multiplication" superClass="intel.compilestep.opt.matmul" value="matmul.enable" valueType="enumerated"/>
+								<option id="intel.compilestep.diagnostics.OpenMP.1216197624" name="OpenMP Report" superClass="intel.compilestep.diagnostics.OpenMP" value="diagnostics.openmp.1" valueType="enumerated"/>
+								<option id="intel.compilestep.diagnostics.autoparallelizer.234956600" name="Autoparallelizer Report" superClass="intel.compilestep.diagnostics.autoparallelizer" value="diagnostics.autoparallelizer.1" valueType="enumerated"/>
+								<option id="intel.compilestep.diagnostics.vectorizer.1043100983" name="Vectorizer Report" superClass="intel.compilestep.diagnostics.vectorizer" value="diagnostics.vectorizer.1" valueType="enumerated"/>
+								<option id="intel.compilestep.coptions.995107764" name="Additional Options" superClass="intel.compilestep.coptions" value="" valueType="string"/>
+								<option id="intel.compilestep.perflibs.mkl.1798150397" name="Use Intel(R) Math Kernel Library (-mkl=[arg])" superClass="intel.compilestep.perflibs.mkl" value="perflibs.mkl.parallel" valueType="enumerated"/>
+								<option id="intel.compilestep.data.OpenMP.1935034429" name="Process OpenMP Directives" superClass="intel.compilestep.data.OpenMP" value="openmp.1" valueType="enumerated"/>
+								<inputType id="intel.cpp.compilestep.input.816416127" superClass="intel.cpp.compilestep.input"/>
+							</tool>
+							<tool id="intel.c.compilestep.linux.x86_64.exe.rel.2146985720_13.1.0" name="Intel Intel(R) 64 C Compiler" superClass="intel.c.compilestep.linux.x86_64.exe.rel_13.1.0">
+								<inputType id="intel.c.compilestep.input.776474043" superClass="intel.c.compilestep.input"/>
+							</tool>
+							<tool id="intel.c.linkstep.linux.x86_64.exe.rel.1672358891_13.1.0" name="Intel Intel(R) 64 C Linker" superClass="intel.c.linkstep.linux.x86_64.exe.rel_13.1.0"/>
+							<tool command="mpic++" id="intel.cpp.linkstep.linux.x86_64.exe.rel.1430119620_13.1.0" name="Intel Intel(R) 64 C++ Linker" superClass="intel.cpp.linkstep.linux.x86_64.exe.rel_13.1.0">
+								<option id="intel.linkstep.libname.672268508" name="Additional Libraries (-l)" superClass="intel.linkstep.libname" valueType="libs">
+									<listOptionValue builtIn="false" value="iomp5"/>
+									<listOptionValue builtIn="false" value="mkl_intel_thread"/>
+									<listOptionValue builtIn="false" value="mkl_intel_lp64"/>
+									<listOptionValue builtIn="false" value="mkl_core"/>
+									<listOptionValue builtIn="false" value="hdf5"/>
+									<listOptionValue builtIn="false" value="matio"/>
+								</option>
+								<option id="intel.linkstep.libpath.1537236811" name="Search Directory for Libraries (-L)" superClass="intel.linkstep.libpath" valueType="stringList">
+									<listOptionValue builtIn="false" value="/opt/intel/mkl/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/usr/lib64"/>
+									<listOptionValue builtIn="false" value="/opt/hdf5-1.8.11/hdf5/lib"/>
+								</option>
+								<option id="intel.linkstep.parallel.213040847" name="Parallelization (-parallel)" superClass="intel.linkstep.parallel" value="true" valueType="boolean"/>
+								<option id="intel.linkstep.general.optimization2.1410882953" name="Optimization Level" superClass="intel.linkstep.general.optimization2" value="general.opt.speedHLO" valueType="enumerated"/>
+								<option id="intel.linkstep.options.static.283183160" name="Link with Static Libraries (-static)" superClass="intel.linkstep.options.static" value="false" valueType="boolean"/>
+								<option id="intel.linkstep.options.nodefaultlibs.1440750436" name="Use no System Libraries (-nodefaultlibs)" superClass="intel.linkstep.options.nodefaultlibs" value="false" valueType="boolean"/>
+								<option id="intel.linkstep.options.nocxxlib.819622971" name="Use no C++ Libraries (-no-cxxlib)" superClass="intel.linkstep.options.nocxxlib" value="false" valueType="boolean"/>
+								<option id="intel.linkstep.options.shared_intel.1235277089" name="Link with Dynamic Libraries (-shared-intel)" superClass="intel.linkstep.options.shared_intel" value="false" valueType="boolean"/>
+								<option id="intel.linkstep.loptions.967334030" name="Additional Options" superClass="intel.linkstep.loptions" value="" valueType="string"/>
+								<option id="intel.linkstep.perflibs.mkl.312575585" name="Use Intel(R) Math Kernel Library (-mkl=[arg])" superClass="intel.linkstep.perflibs.mkl" value="perflibs.mkl.parallel" valueType="enumerated"/>
+								<option id="intel.linkstep.options.OpenMP.1230258772" name="Process OpenMP Directives" superClass="intel.linkstep.options.OpenMP" value="openmp.1" valueType="enumerated"/>
+								<inputType id="intel.linkstep.input.57045467" superClass="intel.linkstep.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="intel.linux.x86_64.exe.dbg.1044074008_13.1.0">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="intel.linux.x86_64.exe.dbg.1044074008_13.1.0" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ICCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="intel.linux.x86_64.exe.dbg.1044074008_13.1.0" name="Debug" parent="intel.linux.x86_64.exe.dbg_13.1.0">
+					<folderInfo id="intel.linux.x86_64.exe.dbg.1044074008._13.1.0" name="/" resourcePath="">
+						<toolChain id="intel.toolchain.linux.x86_64.exe.dbg.641795202_13.1.0" name="Intel Toolchain for Executable on Intel(R) 64" superClass="intel.toolchain.linux.x86_64.exe.dbg_13.1.0">
+							<targetPlatform archList="x86_64" binaryParser="org.eclipse.cdt.core.ELF" id="intel.platform.linux.x86_64.exe.dbg_13.1.0.1237082305" name="Platform.Executable.Debug" osList="linux" superClass="intel.platform.linux.x86_64.exe.dbg_13.1.0"/>
+							<builder buildPath="${workspace_loc:/Kalman1}/Debug" id="intel.builder.linux.x86_64.exe.dbg.1217661958_13.1.0" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Intel Builder" superClass="intel.builder.linux.x86_64.exe.dbg_13.1.0"/>
+							<tool command="mpic++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="intel.cpp.compilestep.linux.x86_64.exe.dbg.594987008_13.1.0" name="Intel Intel(R) 64 C++ Compiler " superClass="intel.cpp.compilestep.linux.x86_64.exe.dbg_13.1.0">
+								<option id="intel.compilestep.optimization.parallel.589017665" name="Parallelization (-parallel)" superClass="intel.compilestep.optimization.parallel" value="true" valueType="boolean"/>
+								<option id="intel.compilestep.coptions.1551458019" name="Additional Options" superClass="intel.compilestep.coptions" value="" valueType="string"/>
+								<option id="intel.compilestep.preprocessor.includedirectories.2134623228" name="Additional Include Directories (-I)" superClass="intel.compilestep.preprocessor.includedirectories" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/root/include"/>
+								</option>
+								<option id="intel.compilestep.diagnostics.autoparallelizer.1291452228" name="Autoparallelizer Report" superClass="intel.compilestep.diagnostics.autoparallelizer" value="diagnostics.autoparallelizer.2" valueType="enumerated"/>
+								<option id="intel.compilestep.diagnostics.vectorizer.644630847" name="Vectorizer Report" superClass="intel.compilestep.diagnostics.vectorizer" value="diagnostics.vectorizer.2" valueType="enumerated"/>
+								<option id="intel.compilestep.diagnostics.gap.588104551" name="Enable Guided Auto Parallelism Analysis" superClass="intel.compilestep.diagnostics.gap" value="gap.0" valueType="enumerated"/>
+								<option id="intel.compilestep.general.optimization2.299210318" name="Optimization Level" superClass="intel.compilestep.general.optimization2" value="general.opt.none" valueType="enumerated"/>
+								<option id="intel.compilestep.diagnostics.OpenMP.1852354794" name="OpenMP Report" superClass="intel.compilestep.diagnostics.OpenMP" value="diagnostics.openmp.1" valueType="enumerated"/>
+								<option id="intel.compilestep.opt.matmul.1128592464" name="Optimize Matrix Multiplication" superClass="intel.compilestep.opt.matmul" value="matmul.enable" valueType="enumerated"/>
+								<option id="intel.compilestep.data.OpenMP.1253007830" name="Process OpenMP Directives" superClass="intel.compilestep.data.OpenMP" value="openmp.1" valueType="enumerated"/>
+								<option id="intel.compilestep.language.multibyte.913293652" name="Support Multibyte Characters in Source (-multibyte-chars)" superClass="intel.compilestep.language.multibyte" value="false" valueType="boolean"/>
+								<inputType id="intel.cpp.compilestep.input.1281874036" superClass="intel.cpp.compilestep.input"/>
+							</tool>
+							<tool id="intel.c.compilestep.linux.x86_64.exe.dbg.1493120410_13.1.0" name="Intel Intel(R) 64 C Compiler" superClass="intel.c.compilestep.linux.x86_64.exe.dbg_13.1.0">
+								<option id="intel.compilestep.preprocessor.includedirectories.1141756415" name="Additional Include Directories (-I)" superClass="intel.compilestep.preprocessor.includedirectories" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/root/include"/>
+								</option>
+								<inputType id="intel.c.compilestep.input.1545237373" superClass="intel.c.compilestep.input"/>
+							</tool>
+							<tool id="intel.c.linkstep.linux.x86_64.exe.dbg.859606452_13.1.0" name="Intel Intel(R) 64 C Linker" superClass="intel.c.linkstep.linux.x86_64.exe.dbg_13.1.0"/>
+							<tool command="mpic++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="intel.cpp.linkstep.linux.x86_64.exe.dbg.677040279_13.1.0" name="Intel Intel(R) 64 C++ Linker" superClass="intel.cpp.linkstep.linux.x86_64.exe.dbg_13.1.0">
+								<option id="intel.linkstep.libpath.1596514765" name="Search Directory for Libraries (-L)" superClass="intel.linkstep.libpath" valueType="stringList">
+									<listOptionValue builtIn="false" value="/opt/intel/mkl/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/opt/hdf5-1.8.11/hdf5/lib"/>
+									<listOptionValue builtIn="false" value="/opt/root/lib"/>
+								</option>
+								<option id="intel.linkstep.libname.1036650004" name="Additional Libraries (-l)" superClass="intel.linkstep.libname" valueType="libs">
+									<listOptionValue builtIn="false" value="iomp5"/>
+									<listOptionValue builtIn="false" value="matio"/>
+									<listOptionValue builtIn="false" value="hdf5"/>
+									<listOptionValue builtIn="false" value="mkl_core"/>
+									<listOptionValue builtIn="false" value="mkl_intel_lp64"/>
+									<listOptionValue builtIn="false" value="mkl_intel_thread"/>
+								</option>
+								<option id="intel.linkstep.parallel.1256018105" name="Parallelization (-parallel)" superClass="intel.linkstep.parallel" value="true" valueType="boolean"/>
+								<option id="intel.linkstep.options.static.463558229" name="Link with Static Libraries (-static)" superClass="intel.linkstep.options.static" value="false" valueType="boolean"/>
+								<option id="intel.linkstep.loptions.2026241283" name="Additional Options" superClass="intel.linkstep.loptions" value="" valueType="string"/>
+								<option id="intel.linkstep.general.optimization2.1664360471" name="Optimization Level" superClass="intel.linkstep.general.optimization2" value="general.opt.none" valueType="enumerated"/>
+								<option id="intel.linkstep.options.OpenMP.1208668294" name="Process OpenMP Directives" superClass="intel.linkstep.options.OpenMP" value="openmp.2" valueType="enumerated"/>
+								<inputType id="intel.linkstep.input.961767962" superClass="intel.linkstep.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="Kalman1.intel.linux.executable.2.1592648932" name="Executable" projectType="intel.linux.executable.2"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/Kalman1"/>
+		</configuration>
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/Kalman2"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="intel.linux.x86_64.exe.rel.1066799669_13.1.0;intel.linux.x86_64.exe.rel.1066799669._13.1.0;intel.cpp.compilestep.linux.x86_64.exe.rel.1605523733_13.1.0;intel.cpp.compilestep.input.816416127">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.intel.compiler.cdt.managedbuilder.ui.ICCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="intel.linux.x86_64.exe.dbg.1044074008_13.1.0;intel.linux.x86_64.exe.dbg.1044074008._13.1.0;intel.cpp.compilestep.linux.x86_64.exe.dbg.594987008_13.1.0;intel.cpp.compilestep.input.1281874036">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.intel.compiler.cdt.managedbuilder.ui.ICCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="intel.linux.x86_64.exe.dbg.1044074008_13.1.0;intel.linux.x86_64.exe.dbg.1044074008._13.1.0;intel.c.compilestep.linux.x86_64.exe.dbg.1493120410_13.1.0;intel.c.compilestep.input.1545237373">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.intel.compiler.cdt.managedbuilder.ui.ICCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="intel.linux.x86_64.exe.rel.1066799669_13.1.0;intel.linux.x86_64.exe.rel.1066799669._13.1.0;intel.c.compilestep.linux.x86_64.exe.rel.2146985720_13.1.0;intel.c.compilestep.input.776474043">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.intel.compiler.cdt.managedbuilder.ui.ICCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets>
+			<target name="Debug" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildArguments>-k</buildArguments>
+				<buildTarget>Debug</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+			<target name="Release" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildArguments>-k</buildArguments>
+				<buildTarget>Release</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+		</buildTargets>
+	</storageModule>
+</cproject>
