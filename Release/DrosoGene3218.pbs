@@ -1,0 +1,12 @@
+#PBS -N DrosoGene3218
+#PBS -q debug12core
+#PBS -j oe
+#PBS -o Droso2.$PBS_JOBID
+#PBS -l nodes=1:ppn=2
+#PBS -l walltime=0:00:30:00
+
+cd $PBS_O_WORKDIR
+
+cat $PBS_NODEFILE | uniq > /tmp/nodefile.jxkhan
+
+mpirun -np 2 -machinefile /tmp/nodefile.jxkhan ./Droso2 > logDrosoGene3218.txt
