@@ -283,7 +283,7 @@ MKL_INT CMatrix::SetVec(CVector* pvec,MKL_INT num,bool row)
 {
 	if(pvec == NULL || pvec->length != cols)
 	{
-		assert(false);
+//		assert(false);
 		return -1;
 	}
 	if(row)
@@ -292,7 +292,7 @@ MKL_INT CMatrix::SetVec(CVector* pvec,MKL_INT num,bool row)
 	}
 	else
 	{
-		assert(false);
+//		assert(false);
 		return -1;//not implemented yet
 	}
 	return 0;
@@ -301,10 +301,15 @@ MKL_INT CMatrix::SetVec(CMatrix* pvec,MKL_INT num,bool row)
 {
 	if(pvec == NULL || pvec->cols != cols || pvec->rows != 1)
 	{
-		assert(pvec);
-		assert(pvec->cols == cols);
-		assert(pvec->rows == 1);
-		assert(false);
+//		assert(pvec);
+//		assert(pvec->cols == cols);
+//		assert(pvec->rows == 1);
+		if(pvec == NULL)
+			eprintf("pvec == NULL");
+		if(pvec->cols != cols)
+			eprintf("pvec->cols != cols");
+		if(pvec->rows != 1)
+			eprintf("pvec->rows != 1");
 		return -1;
 	}
 	if(row)

@@ -239,8 +239,16 @@ double perChange = 0.2;
 
 							for(int t = 0;t < (nTimePoints + 1);t++)
 							{
-								ReadMat3d(strNodeFile,"EstKalmanApos",t,&(pgEstA[t]));
-								ReadMat3d(strNodeFile,"EstKalmanSmt",t,&(pgEstSmtA[t]));
+								if(ReadMat3d(strNodeFile,"EstKalmanApos",t,&(pgEstA[t])) == -1)
+								{
+									eprintf("Readmat failed");
+									return -1;
+								}
+								if(ReadMat3d(strNodeFile,"EstKalmanSmt",t,&(pgEstSmtA[t])) == -1)
+								{
+									eprintf("Readmat failed");
+									return -1;
+								}
 
 								if(matEstA[t].SetVec(&(pgEstA[t]),newnode,true) == -1)
 									eprintf("SetVec Failed");
@@ -447,6 +455,13 @@ double perChange = 0.2;
 				}
 				if(wait(&status) == -1)
 					printf("Error waiting for Child\n");
+				//error checking
+				if(WIFSIGNALED(status) || (WEXITSTATUS(status) == -1))
+				{
+					eprintf("Child returned error");
+					MPI_Finalize();
+					return 0;
+				}
 /*				do
 				{
 					if(wait( &status) == -1)    // Wait for child 
@@ -833,7 +848,8 @@ static int CloneFunc(void* arg)
 		ReadMat3d(strFileName,"X_Array",t,&(matX[t]));
 
 	}
-	filter.EstimateGene(matX,pvecY,nGene,nTimePoints,nObservations,&ic,dLambda,gene);
+	if(filter.EstimateGene(matX,pvecY,nGene,nTimePoints,nObservations,&ic,dLambda,gene) == -1)
+		return -1;
 
 	//release the X annd Y matrices
 	for(int t = 0;t < nTimePoints;t++)
