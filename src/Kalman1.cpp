@@ -46,8 +46,8 @@
 //#define OBSARR {7}
 #define DEALLOC_COV 1
 #define NGENE 3218
-#define NOBS 	3
-#define NTIMEPTS 22
+#define NOBS 	6
+#define NTIMEPTS 11
 
 #define DATAGENE 666
 #define DATAIDX 777

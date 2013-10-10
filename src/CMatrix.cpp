@@ -37,7 +37,7 @@ MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n)
 	if(mat == NULL)
 	{
 		printf("Memory Init Failed CMatrix::Create\n");
-		assert(false);
+//		assert(false);
 		rows = 0;
 		cols = 0;
 		return -1;
