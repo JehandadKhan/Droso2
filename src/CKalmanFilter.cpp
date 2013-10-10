@@ -1007,7 +1007,7 @@ MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes
 		pgEstAApr[i].Copy(&pgEstA[i-1]);
 //			printf("The apriori state estimate time:%d and row:%d\n",i,j);
 //			pEstAApr[i][j].Print(true);
-
+		eprintf("Dynamics Updated");
 		//the apriori error covariance
 		mPkp1k[i].Add(&mPkk[i - 1],&matSigmaQ); // P^{-1}_k = P^+_{k-1} + Q_{k-1}
 //			printf("The apriori covariance at time:%d and row:%d\n",i,j);
