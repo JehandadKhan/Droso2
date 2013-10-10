@@ -939,11 +939,20 @@ MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes
 	for(int i =0;i < ntimepts;i++)
 	{
 		if(mPkk[i].Create(nGenes,nGenes) == -1)
+		{
 			eprintf("Create Failed");
+			return -1;
+		}
 		if(mPkp1k[i].Create(nGenes,nGenes) == -1)
+		{
 			eprintf("Create Failed");
+			return -1;
+		}
 		if(mPkN[i].Create(nGenes,nGenes) == -1)
+		{
 			eprintf("Create Failed");
+			return -1;
+		}
 	}
 
 
@@ -958,11 +967,20 @@ MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes
 	for(int i=0; i < ntimepts;i++)
 	{
 		if(pgEstA[i].Create(nGenes,1) == -1)
+		{
 			eprintf("Create Failed");
+			return -1;
+		}
 		if(pgEstAApr[i].Create(nGenes,1) == -1)
+		{
 			eprintf("Create Failed");
+			return -1;
+		}
 		if(pgEstSmtA[i].Create(nGenes,1) == -1)
+		{
 			eprintf("Create Failed");
+			return -1;
+		}
 
 	}
 
@@ -972,7 +990,10 @@ MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes
 
 	CMatrix matKalmanGain;
 	if(matKalmanGain.Create(nGenes,nobs) == -1)
+	{
 		eprintf("Create Failed");
+		return -1;
+	}
 
 	int efftime= 0;
 	int effobs = 0;
