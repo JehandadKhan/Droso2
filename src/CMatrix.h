@@ -7,11 +7,19 @@
 
 #ifndef CMATRIX_H_
 #define CMATRIX_H_
+#include <mpi.h>
 #include <mkl.h>
 #include <stdio.h>
 #include <cstdlib>
 #include <math.h>
 #include "CVector.h"
+
+#define eprintf(MSG) \
+{													\
+		int r = 0;									\
+		MPI_Comm_rank(MPI_COMM_WORLD, &r);					\
+        printf("[%d]%s: %d %s\n",r,__FILE__,__LINE__,MSG); \
+}
 
 
 class CMatrix {

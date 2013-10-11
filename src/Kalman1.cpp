@@ -48,7 +48,6 @@
 #define NGENE 3218
 #define NOBS 	6
 #define NTIMEPTS 11
-
 #define DATAGENE 666
 #define DATAIDX 777
 #define DATAREALZ 888
