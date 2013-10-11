@@ -394,7 +394,7 @@ double perChange = 0.2;
 			}
 
 		}
-		else
+		else // MPI Slave
 		{
 #endif
 			while(1)
