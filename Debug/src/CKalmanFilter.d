@@ -284,28 +284,6 @@ src/CKalmanFilter.d: ../src/CKalmanFilter.cpp ../src/CKalmanFilter.h \
 
 ../src/CMatrix.h:
 
-/opt/intel/composer_xe_2013.3.163/compiler/include/math.h:
-
-/usr/include/math.h:
-
-/usr/include/bits/huge_val.h:
-
-/usr/include/bits/huge_valf.h:
-
-/usr/include/bits/huge_vall.h:
-
-/usr/include/bits/inf.h:
-
-/usr/include/bits/nan.h:
-
-/usr/include/bits/mathdef.h:
-
-/usr/include/bits/mathcalls.h:
-
-../src/CSparseMatrix.h:
-
-../src/CMatrix3D.h:
-
 /usr/local/include/mpi.h:
 
 /usr/local/include/mpi_portable_platform.h:
@@ -385,3 +363,25 @@ src/CKalmanFilter.d: ../src/CKalmanFilter.cpp ../src/CKalmanFilter.h \
 /usr/local/include/openmpi/ompi/mpi/cxx/win_inln.h:
 
 /usr/local/include/openmpi/ompi/mpi/cxx/file_inln.h:
+
+/opt/intel/composer_xe_2013.3.163/compiler/include/math.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+../src/CSparseMatrix.h:
+
+../src/CMatrix3D.h:

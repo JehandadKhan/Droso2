@@ -22,7 +22,7 @@ CMatrix::CMatrix(int m, int n) {
 	mat = (double*) mkl_calloc(1,(m + 1)*n*sizeof(double),64);
 	if(mat == NULL)
 	{
-		printf("Memory Init Failed CMatrix::CMatrix\n");
+		eprintf("Memory Init Failed CMatrix::CMatrix\n");
 		assert(false);
 	}
 	rows = m;
@@ -350,7 +350,7 @@ MKL_INT CMatrix::VecProd(CVector* opa,CVector* opb)
 	}
 	else
 	{
-		printf("Error -> CMatrix::VecProd\n");
+		eprintf("Error -> CMatrix::VecProd\n");
 		return -1;
 	}
 	return 0;
@@ -365,7 +365,7 @@ MKL_INT CMatrix::InvMat(CMatrix* ptrres)
 	i = (lapack_int*) mkl_calloc(1,cols * sizeof(lapack_int),64);
 	if( i == NULL)
 	{
-		printf("Memory Init Failed CMatrix::InvMat\n");
+		eprintf("Memory Init Failed CMatrix::InvMat\n");
 		assert(false);
 	}
 	//get the tri factorization
@@ -409,7 +409,7 @@ MKL_INT CMatrix::EyeSubMat(double alpha)
 {
 	if(rows != cols)
 	{
-		printf("Error -> CMatrix::EyeSubMat \n");
+		eprintf("Error -> CMatrix::EyeSubMat \n");
 		return -1;
 	}
 	//inplace scale the matrix by minus 1

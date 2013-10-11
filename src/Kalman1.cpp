@@ -46,8 +46,8 @@
 //#define OBSARR {7}
 #define DEALLOC_COV 1
 #define NGENE 3218
-#define NOBS 	6
-#define NTIMEPTS 11
+#define NOBS 	3
+#define NTIMEPTS 22
 #define DATAGENE 666
 #define DATAIDX 777
 #define DATAREALZ 888
@@ -159,7 +159,7 @@ double perChange = 0.2;
 					int st;
 					if (stack == NULL)
 					{
-						printf("Error Allocating Stack\n");
+						eprintf("Error Allocating Stack\n");
 					}
 					stackTop = stack + STACK_SIZE;  /* Assume stack grows downward */
 
@@ -438,7 +438,7 @@ double perChange = 0.2;
 				int status;
 				if (stack == NULL)
 				{
-					printf("Error Allocating Stack\n");
+					eprintf("Error Allocating Stack\n");
 				}
 				stackTop = stack + STACK_SIZE;  /* Assume stack grows downward */
 				ChildData d;
@@ -450,10 +450,10 @@ double perChange = 0.2;
 				pid = clone(CloneFunc, stackTop, /*CLONE_NEWUTS | */ SIGCHLD | CLONE_VFORK /*| CLONE_NEWPID*/, &d);
 				if (pid == -1)
 				{
-					printf("Error Creating Clone\n");
+					eprintf("Error Creating Clone\n");
 				}
 				if(wait(&status) == -1)
-					printf("Error waiting for Child\n");
+					eprintf("Error waiting for Child\n");
 				//error checking
 				if(WIFSIGNALED(status) || (WEXITSTATUS(status) == -1))
 				{
@@ -485,7 +485,7 @@ double perChange = 0.2;
 #ifdef USEMPI
 	MPI_Finalize();
 #endif
-	printf("Simulation Run Completed Successfully\n");
+	eprintf("Simulation Run Completed Successfully\n");
 	return 0;
 }
 
@@ -979,11 +979,13 @@ MKL_INT ReadMat3d(char* filename,char* varname,int dim,CMatrix* retmat)
 	matvar_t *cellvar;
 	size_t dims[2];
 	int   start[2]={0,0},stride[2]={1,1},edge[2]={0};
+	char str[256] = {0};
 
 	matfile = Mat_Open(filename,MAT_ACC_RDONLY);
 	if(matfile == NULL)
 	{
-		printf("ReadMat3d read file error file: %s variable %s dim %d\n",filename,varname,dim);
+		sprintf(str,"ReadMat3d read file error file: %s variable %s dim %d\n",filename,varname,dim);
+		eprintf(str);
 		return -1;
 //		assert(false);
 	}
@@ -991,7 +993,8 @@ MKL_INT ReadMat3d(char* filename,char* varname,int dim,CMatrix* retmat)
 	cellvar = Mat_VarRead(matfile,varname);
 	if(cellvar == NULL)
 	{
-		printf("ReadMat3d read cell error file: %s variable %s dim %d\n",filename,varname,dim);
+		printf(str,"ReadMat3d read cell error file: %s variable %s dim %d\n",filename,varname,dim);
+		eprintf(str);
 		return -1;
 //		assert(false);
 	}
@@ -999,7 +1002,8 @@ MKL_INT ReadMat3d(char* filename,char* varname,int dim,CMatrix* retmat)
 	matvar = Mat_VarGetCell(cellvar,dim);
 	if(matvar == NULL)
 	{
-		printf("ReadMat3d read mat error file: %s variable %s dim %d\n",filename,varname,dim);
+		sprintf(str,"ReadMat3d read mat error file: %s variable %s dim %d\n",filename,varname,dim);
+		eprintf(str);
 		return -1;
 //		assert(false);
 	}
@@ -1033,18 +1037,21 @@ MKL_INT ReadMat(char* filename,char* varname,CMatrix* retmat)
 	matvar_t *cellvar;
 	size_t dims[2];
 	int   start[2]={0,0},stride[2]={1,1},edge[2]={0};
+	char str[256] = {0};
 
 	matfile = Mat_Open(filename,MAT_ACC_RDONLY);
 	if(matfile == NULL)
 	{
-		printf("ReadMat read file error\n");
-		assert(false);
+		eprintf("ReadMat read file error\n");
+		return -1;
+//		assert(false);
 	}
 
 	matvar = Mat_VarRead(matfile,varname);
 	if(matvar == NULL)
 	{
-		printf("ReadMat Error: Variable not found filename %s variable %s \n",filename,varname);
+		sprintf(str,"ReadMat Error: Variable not found filename %s variable %s \n",filename,varname);
+		eprintf(str);
 		return -1;
 	}
 

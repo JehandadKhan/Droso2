@@ -997,11 +997,13 @@ MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes
 
 	int efftime= 0;
 	int effobs = 0;
+	char str[256] = {0};
 
 	//for each time k
 	for(int i = 1;i < ntimepts;i++)
 	{
-		printf("Kalman Filter at time %d\n",i);
+		sprintf(str,"Kalman Filter at time %d\n",i);
+		eprintf(str);
 		CMatrix H(nobs,nGenes);
 		eprintf("declared H");
 //		pMatX[i-1]->Print();
