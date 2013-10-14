@@ -1,5 +1,6 @@
 src/CMatrix.d: ../src/CMatrix.cpp ../src/CMatrix.h ../src/CVector.h \
- ../src/Kalman1.h ../src/mmio.h ../src/CRndStream.h
+ ../src/Kalman1.h ../src/rapidxml.hpp ../src/rapidxml_utils.hpp ../src/mmio.h \
+ ../src/CRndStream.h
 
 ../src/CMatrix.h:
 
@@ -374,6 +375,40 @@ src/CMatrix.d: ../src/CMatrix.cpp ../src/CMatrix.h ../src/CVector.h \
 ../src/Kalman1.h:
 
 /usr/include/assert.h:
+
+../src/rapidxml.hpp:
+
+/usr/include/c++/4.7.2/cassert:
+
+../src/rapidxml_utils.hpp:
+
+/usr/include/c++/4.7.2/vector:
+
+/usr/include/c++/4.7.2/bits/stl_construct.h:
+
+/usr/include/c++/4.7.2/ext/alloc_traits.h:
+
+/usr/include/c++/4.7.2/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.7.2/bits/stl_vector.h:
+
+/usr/include/c++/4.7.2/bits/stl_bvector.h:
+
+/usr/include/c++/4.7.2/bits/vector.tcc:
+
+/usr/include/c++/4.7.2/fstream:
+
+/usr/include/c++/4.7.2/bits/codecvt.h:
+
+/usr/include/c++/4.7.2/cstdio:
+
+/usr/include/c++/4.7.2/x86_64-redhat-linux/bits/basic_file.h:
+
+/usr/include/c++/4.7.2/x86_64-redhat-linux/bits/c++io.h:
+
+/usr/include/c++/4.7.2/bits/fstream.tcc:
+
+/usr/include/c++/4.7.2/stdexcept:
 
 ../src/mmio.h:
 

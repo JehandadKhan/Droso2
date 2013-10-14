@@ -125,7 +125,7 @@
 								<option id="intel.linkstep.options.static.463558229" name="Link with Static Libraries (-static)" superClass="intel.linkstep.options.static" value="false" valueType="boolean"/>
 								<option id="intel.linkstep.loptions.2026241283" name="Additional Options" superClass="intel.linkstep.loptions" value="" valueType="string"/>
 								<option id="intel.linkstep.general.optimization2.1664360471" name="Optimization Level" superClass="intel.linkstep.general.optimization2" value="general.opt.none" valueType="enumerated"/>
-								<option id="intel.linkstep.options.OpenMP.1208668294" name="Process OpenMP Directives" superClass="intel.linkstep.options.OpenMP" value="openmp.2" valueType="enumerated"/>
+								<option id="intel.linkstep.options.OpenMP.1208668294" name="Process OpenMP Directives" superClass="intel.linkstep.options.OpenMP" value="openmp.1" valueType="enumerated"/>
 								<inputType id="intel.linkstep.input.961767962" superClass="intel.linkstep.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

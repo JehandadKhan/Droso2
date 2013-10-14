@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<props>
+  <nGenes>3218</nGenes>
+  <nObs>3</nObs>
+  <nRealizations>1</nRealizations>
+  <nTimePoints>22</nTimePoints>
+  <nIdx>1</nIdx>
+  <nSimulate>0</nSimulate>
+</props>

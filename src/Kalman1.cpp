@@ -25,7 +25,7 @@
 #include <sys/utsname.h>
 #include <sys/types.h>
 
-#include <mpi.h>
+//#include <mpi.h>
 #include <signal.h>
 
 #include <ios>
@@ -40,6 +40,8 @@
 
 #define MINLAMBDA 0
 #define MAXLAMBDA 2
+#define PROP_FILE "props.xml"
+
 #define NUM_REALIZATIONS 1
 #define NUM_IDX 1
 //#define GENEARR {10}
@@ -97,6 +99,8 @@ int main(int argc, char *argv[])
 int numprocs = 0, namelen, id = 0,mpirank = 0;
 char processor_name[MPI_MAX_PROCESSOR_NAME];
 
+
+
 #ifdef USEMPI
 setbuf(stdout, NULL);
 MPI_Init(&argc,&argv);
@@ -123,15 +127,41 @@ double perChange = 0.2;
 #ifdef USEMPI
 		if(mpirank == 0)
 		{
+
+			printf("Parsing Peoperties: %s\n",PROP_FILE);
+			rapidxml::xml_document<> doc;
+			rapidxml::file<> xmlFile(PROP_FILE);
+			doc.parse<0>(xmlFile.data());
+			rapidxml::xml_node<>* props = doc.first_node("props");
+
+			printf("nGene: %s\n",props->first_node("nGenes")->value());
+			printf("nObs: %s\n",props->first_node("nObs")->value());
+			printf("nRealizations: %s\n",props->first_node("nRealizations")->value());
+			printf("nTimePoints: %s\n",props->first_node("nTimePoints")->value());
+			printf("nIdx: %s\n",props->first_node("nIdx")->value());
+			printf("nSimulate: %s\n",props->first_node("nSimulate")->value());
+
+			printf("Parsing Complete\n");
+
+			MKL_INT numIndx = atoi(props->first_node("nIdx")->value());
 			double start = omp_get_wtime();
-			for(int idx = 0; idx < NUM_IDX;idx++)
+
+			for(int idx = 0; idx < numIndx;idx++)
 			{
-				MKL_INT nGene = NGENE;
-				MKL_INT nTimePoints = NTIMEPTS;
-				MKL_INT nObservations = NOBS;
+				MKL_INT nGene = 0;
+				MKL_INT nTimePoints = 0;
+				MKL_INT nObservations = 0;
+
+				nGene = atoi(props->first_node("nGenes")->value());
+				nTimePoints = atoi(props->first_node("nTimePoints")->value());
+				nObservations = atoi(props->first_node("nObs")->value());
+				MKL_INT nRealizations = atoi(props->first_node("nRealizations")->value());
+				char nSimulate = atoi(props->first_node("nSimulate")->value());
+
+
 //				double arrSparsityLvl[NUM_IDX] = {0.1, 0.2, 0.3,0.4,0.5};
 
-				for(int curRealization = 0; curRealization < NUM_REALIZATIONS;curRealization++)
+				for(int curRealization = 0; curRealization < nRealizations;curRealization++)
 				{
 					double vm,rss;
 					process_mem_usage(vm,rss);
@@ -169,32 +199,35 @@ double perChange = 0.2;
 					data.reliza = curRealization;
 					data.splvl = 0.18;//arrSparsityLvl[idx];
 
-//					pid = clone(CreateNWProc, stackTop, /*CLONE_NEWUTS | */ SIGCHLD | CLONE_VFORK /*| CLONE_NEWPID*/, &data);
-//					if (pid == -1)
-//					{
-//						printf("Error Creating Clone\n");
-//					}
-//					do
-//					{
-//						if(waitpid(pid, &st, WUNTRACED | WCONTINUED) == -1)    /* Wait for child */
-//						{
-//							printf("Error WaitPid\n");
-//						}
-//					}while(!WIFEXITED(st) && !WIFSIGNALED(st));
-//
-//
-//					CTimeVaryingNW nw;
-//					nw.CreateNW(nGene,nTimePoints,nObservations,perChange,0.18,time(NULL),curRealization);
-//
-//					SaveMat3d(strFileName,3,
-//							(nw.matGeneInteractions),nw.nTimePts,"A_Array",
-//							nw.pMatX,nw.nTimePts,"X_Array",
-//							nw.pMatY,nw.nTimePts,"Y_Array");
+					if(nSimulate)
+					{
+						pid = clone(CreateNWProc, stackTop, /*CLONE_NEWUTS | */ SIGCHLD | CLONE_VFORK /*| CLONE_NEWPID*/, &data);
+						if (pid == -1)
+						{
+							printf("Error Creating Clone\n");
+						}
+						do
+						{
+							if(waitpid(pid, &st, WUNTRACED | WCONTINUED) == -1)    /* Wait for child */
+							{
+								printf("Error WaitPid\n");
+							}
+						}while(!WIFEXITED(st) && !WIFSIGNALED(st));
+
+
+						CTimeVaryingNW nw;
+						nw.CreateNW(nGene,nTimePoints,nObservations,perChange,0.18,time(NULL),curRealization);
+
+						SaveMat3d(strFileName,3,
+								(nw.matGeneInteractions),nw.nTimePts,"A_Array",
+								nw.pMatX,nw.nTimePts,"X_Array",
+								nw.pMatY,nw.nTimePts,"Y_Array");
 					//also write the same info to the results file
 
 		// TODO the CTimeVaryingNW class should automatically dealloc its variables as soon as the variables go out of scope
-					mkl_free_buffers();
-					printf("[%d]Realization %d Index %d Time: %lf Network Generated \n",mpirank,curRealization,idx, omp_get_wtime()- start);
+						mkl_free_buffers();
+						printf("[%d]Realization %d Index %d Time: %lf Network Generated \n",mpirank,curRealization,idx, omp_get_wtime()- start);
+					}
 					//now we will wait send the gene numbers, realization and index to the target processes
 					//for each index default zero
 						//for each realization default zero

@@ -14,8 +14,9 @@
 //#include <math.h>
 #include <cstdlib>
 #include <assert.h>
-
-
+#include <mpi.h>
+#include "rapidxml.hpp"
+#include "rapidxml_utils.hpp"
 
 #define eprintf(MSG) \
 {													\

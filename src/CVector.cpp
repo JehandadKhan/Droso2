@@ -29,8 +29,9 @@ MKL_INT CVector::Create(MKL_INT l,bool bcol)
 	data = (double*) mkl_calloc(1,l*sizeof(double),64);
 	if(data == NULL)
 	{
-		printf("Memory Init Failed CVector::Create \n");
-		assert(false);
+		eprintf("Memory Init Failed CVector::Create \n");
+//		assert(false);
+		return -1;
 	}
 	bColVector = bcol;
 	length = l;
@@ -49,8 +50,8 @@ CVector::CVector(double* ptr,int l, bool bCol)
 	data = (double*) mkl_calloc(1,l*sizeof(double),64);
 	if(data == NULL)
 	{
-		printf("Memory Init Failed CVector::CVector \n");
-		assert(false);
+		eprintf("Memory Init Failed CVector::CVector \n");
+//		assert(false);
 	}
 	bColVector = bCol;
 	length = l;
@@ -64,8 +65,8 @@ void CVector::Copy(CVector* pSrc)
 		data = (double*)mkl_calloc(1,pSrc->length * sizeof(double),64);
 	if(data == NULL)
 	{
-		printf("Memory Init Failed CVector::Copy \n");
-		assert(false);
+		eprintf("Memory Init Failed CVector::Copy \n");
+//		assert(false);
 	}
 	bColVector = pSrc->bColVector;
 	length = pSrc->length;
@@ -135,7 +136,8 @@ MKL_INT CVector::AddI(CVector* opB, double alpha, double beta)
 		cblas_daxpby(length,beta,opB->data,1,alpha,data,1);
 	else
 	{
-		assert(false);
+//		assert(false);
+		eprintf("CVector:AddI Invalid operands");
 		return -1;
 	}
 	return 0;
@@ -150,13 +152,13 @@ MKL_INT CVector::ReadMMFile(char* strfilename)
 
     if ((f = fopen(strfilename, "r")) == NULL) {
            printf("Could not file vector input file : %s.\n", strfilename);
-            exit(1);
+           return -1;
     }
 
     if (mm_read_banner(f, &matcode) != 0)
     {
         printf("Could not process Matrix Market banner in input file %s.\n", strfilename);
-        exit(1);
+        return -1;
     }
 
     /*  This is how one can screen matrix types if their application */
@@ -167,14 +169,14 @@ MKL_INT CVector::ReadMMFile(char* strfilename)
     {
         printf("Sorry, this application does not support ");
         printf("Market Market type: [%s]\n", mm_typecode_to_str(matcode));
-        exit(1);
+        return -1;
     }
 
     /* find out size of sparse matrix .... */
 
     if ((ret_code = mm_read_mtx_crd_size(f, &M, &N, &nz)) !=0){
         printf("Could not process Matrix Market size in input file: %s.\n", strfilename);
-        exit(1);
+        return -1;
     }
 
 
@@ -269,7 +271,14 @@ MKL_INT CVector::WriteMMFile(char* strfilename)
 	mm_set_coordinate(&matcode);
 	mm_set_real(&matcode);
 	FILE * fp = fopen(strfilename,"w");
-	assert(fp);
+	if(fp == NULL)
+	{
+		char str[512] = {0};
+		sprintf(str,"CVector:WriteMMFile. Could not open file: %s ",strfilename);
+		eprintf(str);
+	}
+
+
 	mm_write_banner(fp, matcode);
 	mm_write_mtx_crd_size(fp, M, N, nz);
 

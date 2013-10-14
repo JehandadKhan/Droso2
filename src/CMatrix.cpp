@@ -23,7 +23,7 @@ CMatrix::CMatrix(int m, int n) {
 	if(mat == NULL)
 	{
 		eprintf("Memory Init Failed CMatrix::CMatrix\n");
-		assert(false);
+//		assert(false);
 	}
 	rows = m;
 	cols = n;
@@ -366,7 +366,8 @@ MKL_INT CMatrix::InvMat(CMatrix* ptrres)
 	if( i == NULL)
 	{
 		eprintf("Memory Init Failed CMatrix::InvMat\n");
-		assert(false);
+//		assert(false);
+		return -1;
 	}
 	//get the tri factorization
 	// then we get the inverse of the matrix

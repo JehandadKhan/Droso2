@@ -1,6 +1,7 @@
 src/CKalmanFilter.d: ../src/CKalmanFilter.cpp ../src/CKalmanFilter.h \
- ../src/Kalman1.h ../src/CLasso.h ../src/CVector.h ../src/mmio.h ../src/CMatrix.h \
- ../src/CSparseMatrix.h ../src/CMatrix3D.h ../src/CMatrix3D.h
+ ../src/Kalman1.h ../src/rapidxml.hpp ../src/rapidxml_utils.hpp ../src/CLasso.h \
+ ../src/CVector.h ../src/mmio.h ../src/CMatrix.h ../src/CSparseMatrix.h \
+ ../src/CMatrix3D.h ../src/CMatrix3D.h
 
 ../src/CKalmanFilter.h:
 
@@ -276,14 +277,6 @@ src/CKalmanFilter.d: ../src/CKalmanFilter.cpp ../src/CKalmanFilter.h \
 
 /usr/include/assert.h:
 
-../src/CLasso.h:
-
-../src/CVector.h:
-
-../src/mmio.h:
-
-../src/CMatrix.h:
-
 /usr/local/include/mpi.h:
 
 /usr/local/include/mpi_portable_platform.h:
@@ -363,6 +356,48 @@ src/CKalmanFilter.d: ../src/CKalmanFilter.cpp ../src/CKalmanFilter.h \
 /usr/local/include/openmpi/ompi/mpi/cxx/win_inln.h:
 
 /usr/local/include/openmpi/ompi/mpi/cxx/file_inln.h:
+
+../src/rapidxml.hpp:
+
+/usr/include/c++/4.7.2/cassert:
+
+../src/rapidxml_utils.hpp:
+
+/usr/include/c++/4.7.2/vector:
+
+/usr/include/c++/4.7.2/bits/stl_construct.h:
+
+/usr/include/c++/4.7.2/ext/alloc_traits.h:
+
+/usr/include/c++/4.7.2/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.7.2/bits/stl_vector.h:
+
+/usr/include/c++/4.7.2/bits/stl_bvector.h:
+
+/usr/include/c++/4.7.2/bits/vector.tcc:
+
+/usr/include/c++/4.7.2/fstream:
+
+/usr/include/c++/4.7.2/bits/codecvt.h:
+
+/usr/include/c++/4.7.2/cstdio:
+
+/usr/include/c++/4.7.2/x86_64-redhat-linux/bits/basic_file.h:
+
+/usr/include/c++/4.7.2/x86_64-redhat-linux/bits/c++io.h:
+
+/usr/include/c++/4.7.2/bits/fstream.tcc:
+
+/usr/include/c++/4.7.2/stdexcept:
+
+../src/CLasso.h:
+
+../src/CVector.h:
+
+../src/mmio.h:
+
+../src/CMatrix.h:
 
 /opt/intel/composer_xe_2013.3.163/compiler/include/math.h:
 
