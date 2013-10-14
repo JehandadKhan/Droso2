@@ -42,14 +42,9 @@
 #define MAXLAMBDA 2
 #define PROP_FILE "props.xml"
 
-#define NUM_REALIZATIONS 1
-#define NUM_IDX 1
 //#define GENEARR {10}
 //#define OBSARR {7}
 #define DEALLOC_COV 1
-#define NGENE 3218
-#define NOBS 	3
-#define NTIMEPTS 22
 #define DATAGENE 666
 #define DATAIDX 777
 #define DATAREALZ 888
@@ -68,7 +63,9 @@ struct ChildData
 	int g;
 	int indx;
 	int crealizaion;
-
+	int nGene;
+	int nTimePts;
+	int nObs;
 };
 
 struct NWData
@@ -77,6 +74,9 @@ struct NWData
 	int reliza;
 	int pch;
 	int splvl;
+	int nGene;
+	int nTimePts;
+	int nObs;
 };
 
 
@@ -111,6 +111,35 @@ printf("MPI: Process %d on %s out of %d\n",mpirank,processor_name,numprocs);
 
 #endif
 
+printf("Parsing Peoperties: %s\n",PROP_FILE);
+rapidxml::xml_document<> doc;
+rapidxml::file<> xmlFile(PROP_FILE);
+doc.parse<0>(xmlFile.data());
+rapidxml::xml_node<>* props = doc.first_node("props");
+
+printf("nGene: %s\n",props->first_node("nGenes")->value());
+printf("nObs: %s\n",props->first_node("nObs")->value());
+printf("nRealizations: %s\n",props->first_node("nRealizations")->value());
+printf("nTimePoints: %s\n",props->first_node("nTimePoints")->value());
+printf("nIdx: %s\n",props->first_node("nIdx")->value());
+printf("nSimulate: %s\n",props->first_node("nSimulate")->value());
+
+printf("Parsing Complete\n");
+
+MKL_INT numIndx = atoi(props->first_node("nIdx")->value());
+
+MKL_INT nGene = 0;
+MKL_INT nTimePoints = 0;
+MKL_INT nObservations = 0;
+
+nGene = atoi(props->first_node("nGenes")->value());
+nTimePoints = atoi(props->first_node("nTimePoints")->value());
+nObservations = atoi(props->first_node("nObs")->value());
+MKL_INT nRealizations = atoi(props->first_node("nRealizations")->value());
+char nSimulate = atoi(props->first_node("nSimulate")->value());
+
+
+
 
 //MKL_INT arrGene = {10,10,10,10};
 //MKL_INT nGene = 50;
@@ -128,35 +157,10 @@ double perChange = 0.2;
 		if(mpirank == 0)
 		{
 
-			printf("Parsing Peoperties: %s\n",PROP_FILE);
-			rapidxml::xml_document<> doc;
-			rapidxml::file<> xmlFile(PROP_FILE);
-			doc.parse<0>(xmlFile.data());
-			rapidxml::xml_node<>* props = doc.first_node("props");
-
-			printf("nGene: %s\n",props->first_node("nGenes")->value());
-			printf("nObs: %s\n",props->first_node("nObs")->value());
-			printf("nRealizations: %s\n",props->first_node("nRealizations")->value());
-			printf("nTimePoints: %s\n",props->first_node("nTimePoints")->value());
-			printf("nIdx: %s\n",props->first_node("nIdx")->value());
-			printf("nSimulate: %s\n",props->first_node("nSimulate")->value());
-
-			printf("Parsing Complete\n");
-
-			MKL_INT numIndx = atoi(props->first_node("nIdx")->value());
 			double start = omp_get_wtime();
 
 			for(int idx = 0; idx < numIndx;idx++)
 			{
-				MKL_INT nGene = 0;
-				MKL_INT nTimePoints = 0;
-				MKL_INT nObservations = 0;
-
-				nGene = atoi(props->first_node("nGenes")->value());
-				nTimePoints = atoi(props->first_node("nTimePoints")->value());
-				nObservations = atoi(props->first_node("nObs")->value());
-				MKL_INT nRealizations = atoi(props->first_node("nRealizations")->value());
-				char nSimulate = atoi(props->first_node("nSimulate")->value());
 
 
 //				double arrSparsityLvl[NUM_IDX] = {0.1, 0.2, 0.3,0.4,0.5};
@@ -198,6 +202,9 @@ double perChange = 0.2;
 					data.pch = perChange;
 					data.reliza = curRealization;
 					data.splvl = 0.18;//arrSparsityLvl[idx];
+					data.nGene = nGene;
+					data.nObs = nObservations;
+					data.nTimePts = nTimePoints;
 
 					if(nSimulate)
 					{
@@ -479,6 +486,9 @@ double perChange = 0.2;
 				d.g = gene;
 				d.indx = idx;
 				d.rank = mpirank;
+				d.nGene = nGene;
+				d.nTimePts = nTimePoints;
+				d.nObs = nObservations;
 //				CloneFunc(&d);
 				pid = clone(CloneFunc, stackTop, /*CLONE_NEWUTS | */ SIGCHLD | CLONE_VFORK /*| CLONE_NEWPID*/, &d);
 				if (pid == -1)
@@ -681,9 +691,9 @@ static int CloneFunc(void* arg)
 	setbuf(stdout, NULL);
 
 
-	MKL_INT nGene = NGENE;
-	MKL_INT nTimePoints = NTIMEPTS;
-	MKL_INT nObservations = NOBS;//arrObservations[idx];
+	MKL_INT nGene = cd->nGene;
+	MKL_INT nTimePoints = cd->nTimePts;
+	MKL_INT nObservations = cd->nObs;//arrObservations[idx];
 
 	double vm,rss;
 	double start = omp_get_wtime();
@@ -1118,9 +1128,9 @@ static int  CreateNWProc(void *arg)
 
 	char strDirName[256] = {0};
 	char strFileName[256] = {0};
-	int nGene = NGENE;
-	int nObservations = NOBS;
-	int nTimePoints = NTIMEPTS;
+	int nGene = d->nGene;
+	int nObservations = d->nObs;
+	int nTimePoints = d->nTimePts;
 
 	int idx = d->indx;
 	int curRealization = d->reliza;
