@@ -376,6 +376,26 @@ src/CMatrix.d: ../src/CMatrix.cpp ../src/CMatrix.h ../src/CVector.h \
 
 /usr/include/assert.h:
 
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/bits/fcntl.h:
+
+/usr/include/bits/uio.h:
+
 ../src/rapidxml.hpp:
 
 /usr/include/c++/4.7.2/cassert:

@@ -15,6 +15,11 @@
 #include <cstdlib>
 #include <assert.h>
 #include <mpi.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
 

@@ -356,6 +356,26 @@ src/CRndStream.d: ../src/CRndStream.cpp ../src/CRndStream.h ../src/Kalman1.h \
 
 /usr/local/include/openmpi/ompi/mpi/cxx/file_inln.h:
 
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/bits/fcntl.h:
+
+/usr/include/bits/uio.h:
+
 ../src/rapidxml.hpp:
 
 /usr/include/c++/4.7.2/cassert:

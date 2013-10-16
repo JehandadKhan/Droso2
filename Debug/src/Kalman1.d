@@ -355,6 +355,26 @@ src/Kalman1.d: ../src/Kalman1.cpp ../src/Kalman1.h ../src/rapidxml.hpp \
 
 /usr/local/include/openmpi/ompi/mpi/cxx/file_inln.h:
 
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/bits/fcntl.h:
+
+/usr/include/bits/uio.h:
+
 ../src/rapidxml.hpp:
 
 /usr/include/c++/4.7.2/cassert:
@@ -437,10 +457,6 @@ src/Kalman1.d: ../src/Kalman1.cpp ../src/Kalman1.h ../src/rapidxml.hpp \
 
 /opt/intel/composer_xe_2013.3.163/compiler/include/omp.h:
 
-/usr/include/sys/stat.h:
-
-/usr/include/bits/stat.h:
-
 /usr/include/sys/wait.h:
 
 /usr/include/signal.h:
@@ -466,13 +482,3 @@ src/Kalman1.d: ../src/Kalman1.cpp ../src/Kalman1.h ../src/rapidxml.hpp \
 /usr/include/sys/utsname.h:
 
 /usr/include/bits/utsname.h:
-
-/usr/include/unistd.h:
-
-/usr/include/bits/posix_opt.h:
-
-/usr/include/bits/environments.h:
-
-/usr/include/bits/confname.h:
-
-/usr/include/getopt.h:

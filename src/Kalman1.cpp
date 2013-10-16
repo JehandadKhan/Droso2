@@ -20,16 +20,13 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <sys/stat.h>
 #include <sys/wait.h>
 #include <sys/utsname.h>
 #include <sys/types.h>
 
-//#include <mpi.h>
 #include <signal.h>
 
 #include <ios>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -139,6 +136,12 @@ MKL_INT nRealizations = atoi(props->first_node("nRealizations")->value());
 char nSimulate = atoi(props->first_node("nSimulate")->value());
 
 
+// We create a temp file and then map it into memory use it as an array and then wrap up
+//
+//int fd = creat("/tmp/foo.txt",0644);
+//
+//ftruncate(fd,1024*1024*1024);
+//close(fd);
 
 
 //MKL_INT arrGene = {10,10,10,10};
