@@ -70,7 +70,7 @@ struct NWData
 	int indx;
 	int reliza;
 	int pch;
-	int splvl;
+	double splvl;
 	int nGene;
 	int nTimePts;
 	int nObs;
@@ -120,7 +120,8 @@ printf("nRealizations: %s\n",props->first_node("nRealizations")->value());
 printf("nTimePoints: %s\n",props->first_node("nTimePoints")->value());
 printf("nIdx: %s\n",props->first_node("nIdx")->value());
 printf("nSimulate: %s\n",props->first_node("nSimulate")->value());
-
+printf("nStartGene: %s\n",props->first_node("nStartGene")->value());
+printf("nStopGene: %s\n",props->first_node("nStopGene")->value());
 printf("Parsing Complete\n");
 
 MKL_INT numIndx = atoi(props->first_node("nIdx")->value());
@@ -128,27 +129,18 @@ MKL_INT numIndx = atoi(props->first_node("nIdx")->value());
 MKL_INT nGene = 0;
 MKL_INT nTimePoints = 0;
 MKL_INT nObservations = 0;
-
+MKL_INT nStartGene = 0;
+MKL_INT nStopGene = 0;
 nGene = atoi(props->first_node("nGenes")->value());
 nTimePoints = atoi(props->first_node("nTimePoints")->value());
 nObservations = atoi(props->first_node("nObs")->value());
 MKL_INT nRealizations = atoi(props->first_node("nRealizations")->value());
 char nSimulate = atoi(props->first_node("nSimulate")->value());
-
+nStartGene = atoi(props->first_node("nStartGene")->value());
+nStopGene = atoi(props->first_node("nStopGene")->value());
 
 // We create a temp file and then map it into memory use it as an array and then wrap up
-//
-//int fd = creat("/tmp/foo.txt",0644);
-//
-//ftruncate(fd,1024*1024*1024);
-//close(fd);
 
-
-//MKL_INT arrGene = {10,10,10,10};
-//MKL_INT nGene = 50;
-//MKL_INT nTimePoints = 3;
-//MKL_INT arrObservations[] = {2,5,7,10};
-//MKL_INT nObservations = 35;//arrObservations[idx];
 double perChange = 0.2;
 
 	{
@@ -178,13 +170,14 @@ double perChange = 0.2;
 					char strDirName[256] = {0};
 					char strFileName[256] = {0};
 					char strNodeFile[256] = {0};
+					char strGeneFile[256] = {0};
 					char strResultFile[256] = {0};
 					sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
 					umask(0);
 					printf("[%d]Realization %d Index %d Time: %lf Creating Dir\n",mpirank,curRealization,idx,omp_get_wtime()- start);
 					mkdir(strDirName,S_IRWXU | S_IRWXG | S_IRWXO);
 					sprintf(strFileName,"%s/Realization%d.mat",strDirName,curRealization);
-					sprintf(strResultFile,"%s/Results%d.mat",strDirName,curRealization);
+					sprintf(strResultFile,"%s/Results%dGene%dTo%d.mat",strDirName,curRealization,nStartGene,nStopGene);
 
 
 					//instantiate the process
@@ -224,16 +217,6 @@ double perChange = 0.2;
 							}
 						}while(!WIFEXITED(st) && !WIFSIGNALED(st));
 
-
-						CTimeVaryingNW nw;
-						nw.CreateNW(nGene,nTimePoints,nObservations,perChange,0.18,time(NULL),curRealization);
-
-						SaveMat3d(strFileName,3,
-								(nw.matGeneInteractions),nw.nTimePts,"A_Array",
-								nw.pMatX,nw.nTimePts,"X_Array",
-								nw.pMatY,nw.nTimePts,"Y_Array");
-					//also write the same info to the results file
-
 		// TODO the CTimeVaryingNW class should automatically dealloc its variables as soon as the variables go out of scope
 						mkl_free_buffers();
 						printf("[%d]Realization %d Index %d Time: %lf Network Generated \n",mpirank,curRealization,idx, omp_get_wtime()- start);
@@ -250,23 +233,22 @@ double perChange = 0.2;
 						matEstA[t].Create(nGene,nGene);
 						matEstSmtA[t].Create(nGene,nGene);
 					}
-					CMatrix  matEstError(1,nTimePoints);
-					CMatrix  matActEdge(1,nTimePoints);
-					CMatrix matDetEdge(1,nTimePoints);
-					CMatrix matActZero(1,nTimePoints);
-					CMatrix matDetZero(1,nTimePoints);
 
 
 					MPI_Status status;
+					MKL_INT idxGene = nStartGene;
+
 					for(MKL_INT g =0; g < (numprocs - 1);g++)
 					{
-						MPI_Send(&g,1,MPI_INT,g+1,DATAGENE,MPI_COMM_WORLD);//the new job description
+
+						MPI_Send(&idxGene,1,MPI_INT,g+1,DATAGENE,MPI_COMM_WORLD);//the new job description
 						MPI_Send(&idx,1,MPI_INT,g+1,DATAIDX,MPI_COMM_WORLD);
 						MPI_Send(&curRealization,1,MPI_INT,g+1,DATAREALZ,MPI_COMM_WORLD);
+						idxGene++;
 					}
 
 					printf("1\n");
-					for(MKL_INT g = numprocs - 1 ;g < nGene;g++)
+					for(MKL_INT g = idxGene ;g < nStopGene;g++)
 					{
 						//the first one to get back will get the next gene
 						int newnode = 0;
@@ -297,35 +279,10 @@ double perChange = 0.2;
 								if(matEstSmtA[t].SetVec(&(pgEstSmtA[t]),newnode,true) == -1)
 									eprintf("SetVec Failed");
 							}
-							/*
-							CMatrix mat;
-							CMatrix tmp(1,nTimePoints);
-							ReadMat(strNodeFile,"pKalmanErr",&mat);
-	//						printf("Old Error prior to gene %d\n",newnode);
-	//						matEstError.Print();
-							matEstError.Copy(&tmp);
-							matEstError.Add(&tmp,&mat);
-
-							ReadMat(strNodeFile,"matActEdge",&mat);
-							matActEdge.Copy(&tmp);
-							matActEdge.Add(&tmp,&mat);
-
-							ReadMat(strNodeFile,"matDetEdge",&mat);
-							matDetEdge.Copy(&tmp);
-							matDetEdge.Add(&tmp,&mat);
-
-							ReadMat(strNodeFile,"matActZero",&mat);
-							matActZero.Copy(&tmp);
-							matActZero.Add(&tmp,&mat);
-
-							ReadMat(strNodeFile,"matDetZero",&mat);
-							matDetZero.Copy(&tmp);
-							matDetZero.Add(&tmp,&mat);
-
-	//						printf("New error after gene %d\n",newnode);
-	//						matEstError.Print();*/
 							// now we can remove the file
-							remove(strNodeFile);
+//							remove(strNodeFile);
+							sprintf(strGeneFile,"%s/Gene%dEst.mat",strDirName,newnode);
+							rename(strNodeFile, strGeneFile);
 							for(int t = 0;t < (nTimePoints + 1) ;t++)
 							{
 								pgEstA[t].Release();
@@ -333,11 +290,6 @@ double perChange = 0.2;
 							}
 							delete [] pgEstA;
 							delete [] pgEstSmtA;
-						}
-						if(idx != 0)
-						{
-							int a =0;
-							a = a+1;
 						}
 						//send it the next gene and other periphernalia
 //						printf("[%d] gene = %d \n",mpirank,g);
@@ -376,38 +328,18 @@ double perChange = 0.2;
 							}
 							delete [] pgEstA;
 							delete [] pgEstSmtA;
-							/*
 
-							CMatrix mat;
-							CMatrix tmp(1,nTimePoints);
-							ReadMat(strNodeFile,"pKalmanErr",&mat);
-	//						printf("Old Error prior to gene %d\n",newnode);
-	//						matEstError.Print();
-							matEstError.Copy(&tmp);
-							matEstError.Add(&tmp,&mat);
-	//						printf("New error after gene %d\n",newnode);
-							ReadMat(strNodeFile,"matActEdge",&mat);
-							matActEdge.Copy(&tmp);
-							matActEdge.Add(&tmp,&mat);
-
-							ReadMat(strNodeFile,"matDetEdge",&mat);
-							matDetEdge.Copy(&tmp);
-							matDetEdge.Add(&tmp,&mat);
-
-							ReadMat(strNodeFile,"matActZero",&mat);
-							matActZero.Copy(&tmp);
-							matActZero.Add(&tmp,&mat);
-
-							ReadMat(strNodeFile,"matDetZero",&mat);
-							matDetZero.Copy(&tmp);
-							matDetZero.Add(&tmp,&mat);
-*/
 							// now we can remove the file
-							remove(strNodeFile);
+//							remove(strNodeFile);
+							sprintf(strGeneFile,"%s/Gene%dEst.mat",strDirName,newnode);
+							rename(strNodeFile,strGeneFile);
 						}
 					}
-					matEstError.Scale(1/nGene);
+//					matEstError.Scale(1/nGene);
 					//now we can save the file for one realization
+					char strTmp[256] = {0};
+					sprintf(strTmp,"%s.old",strResultFile);
+					rename(strResultFile,strTmp);
 					SaveMat3d(strResultFile,2,
 							matEstA,nTimePoints + 1,"matEstA",
 							matEstSmtA,nTimePoints + 1,"matEstSmtA");/*,
@@ -531,7 +463,7 @@ double perChange = 0.2;
 #ifdef USEMPI
 	MPI_Finalize();
 #endif
-	eprintf("Simulation Run Completed Successfully\n");
+	printf("Simulation Run Completed Successfully\n");
 	return 0;
 }
 
@@ -1138,7 +1070,7 @@ static int  CreateNWProc(void *arg)
 	int idx = d->indx;
 	int curRealization = d->reliza;
 	int perChange = d->pch;
-	int SparsityLvl = d->splvl;
+	double SparsityLvl = d->splvl;
 
 	sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
 	sprintf(strFileName,"%s/Realization%d.mat",strDirName,curRealization);
@@ -1150,6 +1082,7 @@ static int  CreateNWProc(void *arg)
 			(nw.matGeneInteractions),nw.nTimePts,"A_Array",
 			nw.pMatX,nw.nTimePts,"X_Array",
 			nw.pMatY,nw.nTimePts,"Y_Array");
+	printf("Network Generated in the clone function\n");
 
 	return 0;
 }
@@ -1168,6 +1101,9 @@ MKL_INT SaveMat3d(char* filename, int nVars, ...)
 	va_list vl;
 	va_start(vl,nVars);
 	matfile = Mat_Open(filename,MAT_ACC_RDWR | MAT_FT_MAT73	);
+
+	//remove the variable if it already exists in the file
+
 
 	for(int i =0; i < nVars;i++)
 	{

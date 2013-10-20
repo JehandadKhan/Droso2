@@ -16,6 +16,7 @@ CMatrix::CMatrix()
 	rows = 0;
 	cols = 0;
 	mat = NULL;
+	fdTempFile = 0;
 }
 
 CMatrix::CMatrix(int m, int n) {
@@ -27,6 +28,7 @@ CMatrix::CMatrix(int m, int n) {
 	}
 	rows = m;
 	cols = n;
+	fdTempFile = 0;
 }
 MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n)
 {
@@ -44,7 +46,92 @@ MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n)
 	}
 	rows = m;
 	cols = n;
+	fdTempFile = 0;
 	return 0;
+}
+
+MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n,MKL_INT mmaped)
+{
+	if(mat != NULL)
+		mkl_free(mat);
+	if(mmaped)
+	{
+		//create the file temp file and save the filedescriptor in the class for later reference
+		char str[] = "jxkhan.XXXXXX";
+		fdTempFile = mkstemp(str);
+		//change the size of the file to the required size
+		if(fdTempFile == NULL)
+		{
+			//error occured
+			eprintf("Error creating a temporary file");
+			/*
+			 *
+				EACCES
+					Search permission denied for directory in file's path prefix.
+				EEXIST
+					Unable to generate a unique filename.
+				EINTR
+					The call was interrupted by a signal.
+				EMFILE
+					Too many file descriptors in use by the process.
+				ENFILE
+					Too many files open in the system.
+				ENOSPC
+					There was no room in the directory to add the new filename.
+				EROFS
+					Read-only file system.
+			 */
+			return -1;
+		}
+		int retval = ftruncate(fdTempFile,m*n*sizeof(double));
+		if(retval != 0)
+		{
+			eprintf("Failed to change the file size");
+			return -1;
+		}
+
+		//finally we can map the file to a linear memory address to be used by other functions
+		mat = (double*) mmap(NULL,m*n*sizeof(double),PROT_READ | PROT_WRITE,MAP_SHARED,fdTempFile,getpagesize());
+		//TODO: We can use the hugetlb functionality but for now we just make it work and see if we need more performance,
+		// since the mkl docs only refer to it in the context of the MIC acrch
+
+		if(mat == MAP_FAILED)
+		{
+			eprintf(strerror(errno));
+			return -1;
+			/*
+			 *
+			 *
+				EACCES
+					A file descriptor refers to a non-regular file. Or MAP_PRIVATE was requested, but fd is not open for reading. Or MAP_SHARED was requested and PROT_WRITE is set, but fd is not open in read/write (O_RDWR) mode. Or PROT_WRITE is set, but the file is append-only.
+				EAGAIN
+					The file has been locked, or too much memory has been locked (see setrlimit(2)).
+				EBADF
+					fd is not a valid file descriptor (and MAP_ANONYMOUS was not set).
+				EINVAL
+					We don't like addr, length, or offset (e.g., they are too large, or not aligned on a page boundary).
+				EINVAL
+					(since Linux 2.6.12) length was 0.
+				EINVAL
+					flags contained neither MAP_PRIVATE or MAP_SHARED, or contained both of these values.
+				ENFILE
+					The system limit on the total number of open files has been reached.
+				ENODEV
+					The underlying file system of the specified file does not support memory mapping.
+				ENOMEM
+					No memory is available, or the process's maximum number of mappings would have been exceeded.
+				EPERM
+					The prot argument asks for PROT_EXEC but the mapped area belongs to a file on a file system that was mounted no-exec.
+				ETXTBSY
+					MAP_DENYWRITE was set but the object specified by fd is open for writing.
+				EOVERFLOW
+					On 32-bit architecture together with the large file extension (i.e., using 64-bit off_t): the number of pages used for length plus number of pages used for offset would overflow unsigned long (32 bits).
+			 */
+
+		}
+
+	}
+	return -1;
 }
 CMatrix::~CMatrix() {
 	if(mat != NULL)
@@ -76,7 +163,21 @@ MKL_INT CMatrix::Sprand( double sparsity)
 }
 MKL_INT CMatrix::Release()
 {
-	if(mat != NULL)
+	if(mat != NULL && fdTempFile != 0)
+	{
+		int retval = munmap(mat,rows*cols*sizeof(double));
+		if(retval != 0)
+		{
+			eprintf(strerror(errno));
+			return -1;
+		}
+		mat = NULL;
+		rows = 0;
+		cols = 0;
+		close(fdTempFile);
+
+	}
+	else if(mat != NULL)
 	{
 		mkl_free(mat);
 		mat = NULL;

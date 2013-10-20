@@ -19,15 +19,17 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #include <stdlib.h>
+
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
 
 #define eprintf(MSG) \
 {													\
-		int r = 0;									\
-		MPI_Comm_rank(MPI_COMM_WORLD, &r);					\
-        printf("[%d]%s: %d %s\n",r,__FILE__,__LINE__,MSG); \
+	int r = 0;									\
+	MPI_Comm_rank(MPI_COMM_WORLD, &r);					\
+	printf("[%d]%s: %d %s\n",r,__FILE__,__LINE__,MSG); \
 }
 
 

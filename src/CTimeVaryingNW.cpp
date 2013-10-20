@@ -60,12 +60,13 @@ MKL_INT CTimeVaryingNW::CreateNW(MKL_UINT ngene,MKL_INT ntimepts,MKL_INT nobs,do
 	rnd.vRngGaussian(&initial,0,1);
 	initial.Scale(3);
 	initial.Threshold(0.5);
-//	initial.Print();
+	initial.Print();
 	rnd.vRngUniform(&sparse,-1,1);
 //	printf("The spare matrix\n");
 //	sparse.Print();
 	//now we set all the elements above the threshold zero, this way we can increase or decrease the sparsity
 
+//	printf("Sparsity Level is %f\n",sparsitylvl);
 	sparse.BinThreshold(sparsitylvl);
 //	printf("the threholded sparse matrix\n");
 //	sparse.Print();
@@ -75,6 +76,7 @@ MKL_INT CTimeVaryingNW::CreateNW(MKL_UINT ngene,MKL_INT ntimepts,MKL_INT nobs,do
 //	matGeneInteractions->pMats[0]->Print();
 	//create the gene expression for time zero
 //	printf("Interaction matrix time %d\n",0);
+//	matGeneInteractions[0].Print();
 //	matGeneInteractions->pMats[0].Print();
 
 	//generate the matrix X with nObs columns and nGene rows

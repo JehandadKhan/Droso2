@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <math.h>
+#include <sys/mman.h>
+#include <string.h>
+#include <errno.h>
+
 #include "CVector.h"
 
 #define eprintf(MSG) \
@@ -21,6 +25,7 @@
         printf("[%d]%s: %d %s\n",r,__FILE__,__LINE__,MSG); \
 }
 
+#define MMAPED 1
 
 class CMatrix {
 public:
@@ -31,6 +36,7 @@ public:
 	CMatrix(int m,int n);
 	virtual ~CMatrix();
 	MKL_INT Create(MKL_INT m,MKL_INT n);
+	MKL_INT Create(MKL_INT m,MKL_INT n, MKL_INT mmaped);
 	MKL_INT MultiplyV(CVector* res,CVector* opVector,bool TransposeMat = false,double alpha = 1,double beta = 0);//implements the blas level 2 op ?gemv
 	void Set(int m,int n,double val);
 	void Copy(CMatrix* dest,bool bTrans = false);
@@ -66,6 +72,7 @@ public:
 	int rows;
 	int cols;
 	double* mat;
+	int fdTempFile;
 };
 
 #endif /* CMATRIX_H_ */
