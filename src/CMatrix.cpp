@@ -50,14 +50,13 @@ MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n)
 	return 0;
 }
 
-MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n,MKL_INT mmaped)
+MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n,char* str)
 {
 	if(mat != NULL)
 		mkl_free(mat);
-	if(mmaped)
+	if(str)
 	{
 		//create the file temp file and save the filedescriptor in the class for later reference
-		char str[] = "jxkhan.XXXXXX";
 		fdTempFile = mkstemp(str);
 		//change the size of the file to the required size
 		if(fdTempFile == NULL)
@@ -91,7 +90,7 @@ MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n,MKL_INT mmaped)
 		}
 
 		//finally we can map the file to a linear memory address to be used by other functions
-		mat = (double*) mmap(NULL,m*n*sizeof(double),PROT_READ | PROT_WRITE,MAP_SHARED,fdTempFile,getpagesize());
+		mat = (double*) mmap(NULL,m*n*sizeof(double),PROT_READ | PROT_WRITE,MAP_SHARED,fdTempFile,0);
 		//TODO: We can use the hugetlb functionality but for now we just make it work and see if we need more performance,
 		// since the mkl docs only refer to it in the context of the MIC acrch
 
@@ -131,7 +130,9 @@ MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n,MKL_INT mmaped)
 		}
 
 	}
-	return -1;
+	rows = m;
+	cols = n;
+	return 0;
 }
 CMatrix::~CMatrix() {
 	if(mat != NULL)

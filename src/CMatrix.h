@@ -36,7 +36,7 @@ public:
 	CMatrix(int m,int n);
 	virtual ~CMatrix();
 	MKL_INT Create(MKL_INT m,MKL_INT n);
-	MKL_INT Create(MKL_INT m,MKL_INT n, MKL_INT mmaped);
+	MKL_INT Create(MKL_INT m,MKL_INT n, char* str);
 	MKL_INT MultiplyV(CVector* res,CVector* opVector,bool TransposeMat = false,double alpha = 1,double beta = 0);//implements the blas level 2 op ?gemv
 	void Set(int m,int n,double val);
 	void Copy(CMatrix* dest,bool bTrans = false);
@@ -68,7 +68,6 @@ public:
 	static MKL_INT ReadMat3d(char* filename,char* varname,int dim,CMatrix* retmat);
 	static MKL_INT ReadMat(char* filename,char* varname,CMatrix* retmat);
 	static MKL_INT DelMat(char* filename,char* varname);
-
 	int rows;
 	int cols;
 	double* mat;

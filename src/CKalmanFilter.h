@@ -20,7 +20,7 @@ public:
 	CKalmanFilter(CVector** ppvecx, CVector** ppvecy,MKL_INT ngenes,MKL_INT ntimepts,MKL_INT nobs, CVector* ic,double* dLambda);
 	MKL_INT SmoothEstimate();
 	MKL_INT Estimate(CMatrix* pMatX, CMatrix* pMatY,MKL_INT ngenes,MKL_INT ntimepts,MKL_INT nobs, CVector* ic,double* dlambda);
-	MKL_INT EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes,MKL_INT ntimepts,MKL_INT nobs, CVector* ic,double* dlambda,MKL_INT curgene);
+	MKL_INT EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes,MKL_INT ntimepts,MKL_INT nobs, CVector* ic,double* dlambda,MKL_INT curgene, char* strscratch);
 	virtual ~CKalmanFilter();
 	CVector** pEstA;
 	CVector** pEstAApr;

@@ -898,7 +898,7 @@ MKL_INT CKalmanFilter::Estimate(CMatrix* pMatX, CMatrix* pMatY,MKL_INT ngenes,MK
 
 	return 0;
 }
-MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes,MKL_INT ntimepts,MKL_INT nobs, CVector* ic,double* dLambda,MKL_INT curgene)
+MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes,MKL_INT ntimepts,MKL_INT nobs, CVector* ic,double* dLambda,MKL_INT curgene,char* strscratch)
 {
 	//Computes the Kalman estimate based on each row of the connectivity matrix (9th May 2013)
 //form the input (X) at one time into a matrix, with dimension nObs x nGenes
@@ -938,17 +938,17 @@ MKL_INT CKalmanFilter::EstimateGene(CMatrix* pMatX, CVector* vecY,MKL_INT ngenes
 
 	for(int i =0;i < ntimepts;i++)
 	{
-		if(mPkk[i].Create(nGenes,nGenes) == -1)
+		if(mPkk[i].Create(nGenes,nGenes,strscratch) == -1)
 		{
 			eprintf("Create Failed");
 			return -1;
 		}
-		if(mPkp1k[i].Create(nGenes,nGenes) == -1)
+		if(mPkp1k[i].Create(nGenes,nGenes,strscratch) == -1)
 		{
 			eprintf("Create Failed");
 			return -1;
 		}
-		if(mPkN[i].Create(nGenes,nGenes) == -1)
+		if(mPkN[i].Create(nGenes,nGenes,strscratch) == -1)
 		{
 			eprintf("Create Failed");
 			return -1;

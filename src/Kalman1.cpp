@@ -23,6 +23,7 @@
 #include <sys/wait.h>
 #include <sys/utsname.h>
 #include <sys/types.h>
+#include <getopt.h>
 
 #include <signal.h>
 
@@ -30,7 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DIR_NAME "/scratch/jxkhan/DataIdx%dGene%dMeas%dTimePts%d"
+//#define DIR_NAME "/scratch/jxkhan/DataIdx%dGene%dMeas%dTimePts%d"
 #define NODE_LOG "/scratch/jxkhan/Node%dLog.txt"
 
 #define STACK_SIZE (1024 * 1024)
@@ -89,13 +90,16 @@ MKL_INT SaveMat3d(char* filename, int nVars, ...);
 MKL_INT SaveMat(char* filename,int nVars, ... );
 
 
+char strScratch[256] = {0};
+
+
+
 int main(int argc, char *argv[])
 {
 //printf("Intializing Parallel Realizations\n");
 
 int numprocs = 0, namelen, id = 0,mpirank = 0;
 char processor_name[MPI_MAX_PROCESSOR_NAME];
-
 
 
 #ifdef USEMPI
@@ -108,38 +112,102 @@ printf("MPI: Process %d on %s out of %d\n",mpirank,processor_name,numprocs);
 
 #endif
 
-printf("Parsing Peoperties: %s\n",PROP_FILE);
-rapidxml::xml_document<> doc;
-rapidxml::file<> xmlFile(PROP_FILE);
-doc.parse<0>(xmlFile.data());
-rapidxml::xml_node<>* props = doc.first_node("props");
+//parse the command line
 
-printf("nGene: %s\n",props->first_node("nGenes")->value());
-printf("nObs: %s\n",props->first_node("nObs")->value());
-printf("nRealizations: %s\n",props->first_node("nRealizations")->value());
-printf("nTimePoints: %s\n",props->first_node("nTimePoints")->value());
-printf("nIdx: %s\n",props->first_node("nIdx")->value());
-printf("nSimulate: %s\n",props->first_node("nSimulate")->value());
-printf("nStartGene: %s\n",props->first_node("nStartGene")->value());
-printf("nStopGene: %s\n",props->first_node("nStopGene")->value());
-printf("Parsing Complete\n");
-
-MKL_INT numIndx = atoi(props->first_node("nIdx")->value());
-
+MKL_INT numIndx = 0;
 MKL_INT nGene = 0;
 MKL_INT nTimePoints = 0;
 MKL_INT nObservations = 0;
 MKL_INT nStartGene = 0;
 MKL_INT nStopGene = 0;
-nGene = atoi(props->first_node("nGenes")->value());
-nTimePoints = atoi(props->first_node("nTimePoints")->value());
-nObservations = atoi(props->first_node("nObs")->value());
-MKL_INT nRealizations = atoi(props->first_node("nRealizations")->value());
-char nSimulate = atoi(props->first_node("nSimulate")->value());
-nStartGene = atoi(props->first_node("nStartGene")->value());
-nStopGene = atoi(props->first_node("nStopGene")->value());
+MKL_INT nRealizations = 0;
+char nSimulate = 0;
+char strPropFile[128] = {0};
 
-// We create a temp file and then map it into memory use it as an array and then wrap up
+int c = 0;
+int opt_idx = 0;
+static struct option long_options[] = {
+            {"ngene",     		required_argument, 0,  0 },
+            {"nobs",  			required_argument, 0,  0 },
+            {"nrealizations",  	required_argument, 0,  0 },
+            {"ntimepoints",	 	required_argument, 0,  0 },
+            {"nidx", 		 	required_argument, 0,  0 },
+            {"nsimulate",    	required_argument, 0,  0 },
+            {"nstartgene",   	required_argument, 0,  0 },
+            {"nstopgene",    	required_argument, 0,  0 },
+            {"scratchdir",    	required_argument, 0,  0 },
+            {"propsfile",    	required_argument, 0,  0 },
+            {0,         		0,                 0,  0 } };
+
+while(getopt_long(argc,argv,"",long_options,&opt_idx) != -1)
+{
+	printf("option %s with value %s\n",long_options[opt_idx].name,optarg);
+	switch(opt_idx)
+	{
+	case 0:
+		nGene = atoi(optarg);
+		break;
+	case 1:
+		nObservations= atoi(optarg);
+		break;
+	case 2:
+		nRealizations = atoi(optarg);
+		break;
+	case 3:
+		nTimePoints = atoi(optarg);
+		break;
+	case 4:
+		numIndx = atoi(optarg);
+		break;
+	case 5:
+		nSimulate = atoi(optarg);
+		break;
+	case 6:
+		nStartGene = atoi(optarg);
+		break;
+	case 7:
+		nStopGene = atoi(optarg);
+		break;
+	case 8:
+		strcpy(strScratch,optarg);
+		break;
+	case 9:
+		strcpy(strPropFile,optarg);
+
+
+		printf("Parsing Peoperties: %s\n",strPropFile);
+		rapidxml::xml_document<> doc;
+		rapidxml::file<> xmlFile(strPropFile);
+		doc.parse<0>(xmlFile.data());
+		rapidxml::xml_node<>* props = doc.first_node("props");
+		printf("nGene: %s\n",props->first_node("nGenes")->value());
+		printf("nObs: %s\n",props->first_node("nObs")->value());
+		printf("nRealizations: %s\n",props->first_node("nRealizations")->value());
+		printf("nTimePoints: %s\n",props->first_node("nTimePoints")->value());
+		printf("nIdx: %s\n",props->first_node("nIdx")->value());
+		printf("nSimulate: %s\n",props->first_node("nSimulate")->value());
+		printf("nStartGene: %s\n",props->first_node("nStartGene")->value());
+		printf("nStopGene: %s\n",props->first_node("nStopGene")->value());
+		printf("Parsing Complete\n");
+
+		MKL_INT numIndx = atoi(props->first_node("nIdx")->value());
+		nGene = atoi(props->first_node("nGenes")->value());
+		nTimePoints = atoi(props->first_node("nTimePoints")->value());
+		nObservations = atoi(props->first_node("nObs")->value());
+		MKL_INT nRealizations = atoi(props->first_node("nRealizations")->value());
+		nSimulate = atoi(props->first_node("nSimulate")->value());
+		nStartGene = atoi(props->first_node("nStartGene")->value());
+		nStopGene = atoi(props->first_node("nStopGene")->value());
+
+		break;
+	}
+}
+
+if(argc > optind)
+{
+	printf("Unrecognized arguments supplied\n");
+}
+
 
 double perChange = 0.2;
 
@@ -172,7 +240,7 @@ double perChange = 0.2;
 					char strNodeFile[256] = {0};
 					char strGeneFile[256] = {0};
 					char strResultFile[256] = {0};
-					sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
+					sprintf(strDirName,"%s/DataIdx%dGene%dMeas%dTimePts%d",strScratch,idx,nGene,nObservations,nTimePoints);
 					umask(0);
 					printf("[%d]Realization %d Index %d Time: %lf Creating Dir\n",mpirank,curRealization,idx,omp_get_wtime()- start);
 					mkdir(strDirName,S_IRWXU | S_IRWXG | S_IRWXO);
@@ -647,7 +715,7 @@ static int CloneFunc(void* arg)
 	char strLogFileName[256] = {0};
 	char strNodeFile[256] = {0};
 
-	sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
+	sprintf(strDirName,"%s/DataIdx%dGene%dMeas%dTimePts%d",strScratch,idx,nGene,nObservations,nTimePoints);
 //	printf(strDirName);
 	sprintf(strFileName,"%s/Realization%d.mat",strDirName,curRealization);
 //	printf(strFileName);
@@ -825,7 +893,7 @@ static int CloneFunc(void* arg)
 		ReadMat3d(strFileName,"X_Array",t,&(matX[t]));
 
 	}
-	if(filter.EstimateGene(matX,pvecY,nGene,nTimePoints,nObservations,&ic,dLambda,gene) == -1)
+	if(filter.EstimateGene(matX,pvecY,nGene,nTimePoints,nObservations,&ic,dLambda,gene, strScratch) == -1)
 		return -1;
 
 	//release the X annd Y matrices
@@ -1072,7 +1140,7 @@ static int  CreateNWProc(void *arg)
 	int perChange = d->pch;
 	double SparsityLvl = d->splvl;
 
-	sprintf(strDirName,DIR_NAME,idx,nGene,nObservations,nTimePoints);
+	sprintf(strDirName,"%s/DataIdx%dGene%dMeas%dTimePts%d",strScratch,idx,nGene,nObservations,nTimePoints);
 	sprintf(strFileName,"%s/Realization%d.mat",strDirName,curRealization);
 
 	CTimeVaryingNW nw;
