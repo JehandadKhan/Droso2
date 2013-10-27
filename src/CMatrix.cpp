@@ -57,7 +57,9 @@ MKL_INT CMatrix::Create(MKL_INT m,MKL_INT n,char* str)
 	if(str)
 	{
 		//create the file temp file and save the filedescriptor in the class for later reference
-		fdTempFile = mkstemp(str);
+		char tmp[256] = {0};
+		sprintf(tmp,"%s/jxkhan.XXXXXX",str);
+		fdTempFile = mkstemp(tmp);
 		//change the size of the file to the required size
 		if(fdTempFile == NULL)
 		{
