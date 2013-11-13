@@ -876,11 +876,12 @@ static int CloneFunc(void* arg)
 
 	//Run Kalman filter on the network for each time and just one gene
 
+	printf("[%d]WARNING !!!!!!!!!! No Kalman filter running, this is a static network code\n",mpirank);
 
 	/*
 	 * The Kalman filter object
 	 */
-	CKalmanFilter filter;
+//~~	CKalmanFilter filter;
 	//extract the observation vector from the file and store it in an array of CVectors
 	CVector* pvecY = new CVector[nTimePoints];
 	CMatrix* matX = new CMatrix[nTimePoints];
@@ -893,8 +894,8 @@ static int CloneFunc(void* arg)
 		ReadMat3d(strFileName,"X_Array",t,&(matX[t]));
 
 	}
-	if(filter.EstimateGene(matX,pvecY,nGene,nTimePoints,nObservations,&ic,dLambda,gene, strScratch) == -1)
-		return -1;
+//	if(filter.EstimateGene(matX,pvecY,nGene,nTimePoints,nObservations,&ic,dLambda,gene, strScratch) == -1)
+//		return -1;
 
 	//release the X annd Y matrices
 	for(int t = 0;t < nTimePoints;t++)
@@ -906,9 +907,9 @@ static int CloneFunc(void* arg)
 
 	delete [] pvecY;
 	delete [] matX;
-	ic.Destroy();
+//~~	ic.Destroy();
 	mkl_free_buffers();
-	printf("[%d]Realization %d Index %d Time: %lf Gene: %d Kalman Estimate Complete\n",mpirank,curRealization,idx,omp_get_wtime()- start,gene);
+//~~	printf("[%d]Realization %d Index %d Time: %lf Gene: %d Kalman Estimate Complete\n",mpirank,curRealization,idx,omp_get_wtime()- start,gene);
 	/*
 	 * End Kalman Filter
 	 */
@@ -957,12 +958,12 @@ static int CloneFunc(void* arg)
 	{
 		mEstSmtA[t].Create(1,nGene);
 //					filter.pgEstSmtA[t].Print();
-		if(mEstSmtA[t].SetVec(&(filter.pgEstSmtA[t]),0,true) == -1)
-			eprintf("SetVec Failed");
+//~~		if(mEstSmtA[t].SetVec(&(filter.pgEstSmtA[t]),0,true) == -1)
+//~~			eprintf("SetVec Failed");
 
 		mEstA[t].Create(1,nGene);
-		if(mEstA[t].SetVec(&(filter.pgEstA[t]),0,true) == -1)
-			eprintf("SetVec Failed");
+//~~		if(mEstA[t].SetVec(&(filter.pgEstA[t]),0,true) == -1)
+//~~			eprintf("SetVec Failed");
 	}
 	CMatrix matErr(1,nTimePoints);
 	CMatrix matDist(1,nTimePoints);
@@ -993,12 +994,13 @@ static int CloneFunc(void* arg)
 			mEstA,nTimePoints + 1,"EstKalmanApos",
 			mEstSmtA,nTimePoints + 1,"EstKalmanSmt");
 
-	SaveMat(strNodeFile,5,
+	SaveMat(strNodeFile,6,
 			&matErr,"pKalmanErr",
 			&matDist,"dKalmanErr",
 			&matNObs,"nObs",
 			&matNGene,"nGenes",
-			&matNTimePts,"nTimePts");/*,
+			&matNTimePts,"nTimePts",
+			&ic,"InitiCond");/*,
 			&matActEdge,"matActEdge",
 			&matDetEdge,"matDetEdge",
 			&matActZero,"matActZero",
@@ -1009,6 +1011,7 @@ static int CloneFunc(void* arg)
 		mEstSmtA[t].Release();
 		mEstA[t].Release();
 	}
+	ic.Destroy();
 	delete [] mEstA;
 	delete [] mEstSmtA;
 	mEstA = NULL;
